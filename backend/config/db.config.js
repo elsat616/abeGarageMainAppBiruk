@@ -1,14 +1,20 @@
 // Import the mysql2 module Promise Wrapper
-const mysql = require("mysql2");
+const mysql = require("mysql2/promise");
 
 // Prepare connection parameters we use to connect to the database
 const dbconfig = {
   connectionLimit: 10,
-  password: process.env.DB_PASS,
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
+  password: "1616",
+  user: "biruk1",
+  database: "abe_garage",
+  host: "127.0.0.1",
+  // password: process.env.DB_PASS,
+  // user: process.env.DB_USER,
+  // host: process.env.DB_HOST,
+  // database: process.env.DB_NAME,
 };
+
+console.log(process.env.DB_HOST);
 
 // create the connection pool.
 const pool = mysql.createPool(dbconfig);

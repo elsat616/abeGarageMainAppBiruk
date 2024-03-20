@@ -7,7 +7,7 @@ const dbconfig = {
   password: "1616",
   user: "biruk1",
   database: "abe_garage",
-  host: "127.0.0.1",
+  host: "localhost",
   // password: process.env.DB_PASS,
   // user: process.env.DB_USER,
   // host: process.env.DB_HOST,

@@ -18,7 +18,7 @@ async function createEmployee(req, res, next) {
     });
   } else {
     try {
-      employeeData = req.body;
+      const employeeData = req.body;
 
       // create the employee
       const employee = await createEmploye(employeeData);
@@ -27,11 +27,11 @@ async function createEmployee(req, res, next) {
 
       if (!employee) {
         res.status(400).json({
-          msg: "Failed to add the employee!",
+          error: "Failed to add the employee!",
         });
       } else {
         res.status(200).json({
-          msg: "Employee added successfully!",
+          status: "True, (Employee added successfully!)",
         });
       }
     } catch (error) {

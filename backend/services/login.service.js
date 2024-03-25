@@ -30,6 +30,8 @@ async function logIn(employeeData) {
       employee[0].employee_password_hashed
     );
 
+    // return passwordMatch
+
     if (!passwordMatch) {
       returnData = {
         status: "fail",
@@ -43,6 +45,7 @@ async function logIn(employeeData) {
       message: "login successful",
       employee: employee[0],
     };
+    // console.log(employee[0])
     return returnData;
   } catch (error) {
     console.log(error);

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import createEmployee from "../../../../services/employee.services";
 import { useNavigate } from "react-router-dom";
+import { BeatLoader } from "react-spinners";
 
 function AddEmployeeForm(props) {
   const navigate = useNavigate();
@@ -13,6 +14,9 @@ function AddEmployeeForm(props) {
   const [active_employee, setActive_employee] = useState(1);
   const [company_role_id, setCompany_role_id] = useState(1);
 
+  // spinner handler state
+  const [spin, setSpinner] = useState(false);
+
   // Error
   const [emailError, setEmailError] = useState("");
   const [firstNameRequired, setFirstNameRequired] = useState("");
@@ -20,7 +24,7 @@ function AddEmployeeForm(props) {
   const [phoneNumberRequired, setPhoneNumberRequired] = useState("");
   const [PasswordError, setPasswordError] = useState("");
   const [succes, setSucces] = useState(false);
-  const [serverError, setServerError] = useState("");
+  const [serverMsg, setServerMsg] = useState("");
 
   // target
   const emailDom = useRef();
@@ -72,6 +76,17 @@ function AddEmployeeForm(props) {
     if (!employee_email) {
       setEmailError("Email is required");
       valid = false;
+    } else if (!employee_email.includes("@")) {
+      setEmailError("Invalid email format");
+      valid = false;
+    } else {
+      const regex = /^\S+@\S+\.\S+$/;
+      if (!regex.test(employee_email)) {
+        setEmailError("Invalid email format");
+        valid = false;
+      } else {
+        setEmailError("");
+      }
     }
 
     // First name is required
@@ -101,6 +116,11 @@ function AddEmployeeForm(props) {
     // Password has to be at least 6 characters long
     if (!employee_password || employee_password.length < 6) {
       setPasswordError("Password must be at least 6 characters long");
+
+      setTimeout(() => {
+        setPasswordError("");
+      }, 5000);
+
       valid = false;
     } else {
       setPasswordError("");
@@ -123,17 +143,45 @@ function AddEmployeeForm(props) {
     };
 
     try {
+      setSpinner(!spin);
+      setTimeout(() => {
+        setSpinner(false);
+      }, 2000);
       const { data } = await createEmployee(formData);
 
-      setPasswordError(data.msg);
+      if (data.msg) {
+        setEmailError(data.msg);
 
-      navigate("/");
+        setTimeout(() => {
+          setServerMsg("");
+          setSpinner(!spin);
+        }, 2000);
+      }
+
+      if (data.status) {
+        setServerMsg(data.status + "redirecting to homepage...");
+
+        setTimeout(() => {
+          setServerMsg("");
+          setSpinner(!spin);
+          navigate("/");
+        }, 700);
+      }
+
+      if (data.error) {
+        setServerMsg(data.error);
+
+        setTimeout(() => {
+          setServerMsg("");
+          setSpinner(!spin);
+        }, 2000);
+      }
     } catch (error) {
       setEmailError(error.response.data.msg);
 
       setTimeout(() => {
         setEmailError("");
-      }, 5000);
+      }, 3000);
     }
   }
 
@@ -231,8 +279,7 @@ function AddEmployeeForm(props) {
                         ref={companyRoleIdDom}
                         value={company_role_id}
                         onChange={companyRoleIdTracker}
-                        required
-                      >
+                        required>
                         <option value="1">Employee</option>
                         <option value="2">Manager</option>
                         <option value="3">Admin</option>
@@ -260,12 +307,31 @@ function AddEmployeeForm(props) {
                     {/* Submit Button */}
                     <div className="form-group col-md-12">
                       <button
+                        // onClick={spinner}
                         className="theme-btn btn-style-one"
                         type="submit"
-                        data-loading-text="Please wait..."
-                      >
-                        <span>Add employee</span>
+                        data-loading-text="Please wait...">
+                        <span>
+                          {spin ? (
+                            <BeatLoader color="white" size={8} />
+                          ) : (
+                            "Add employee"
+                          )}
+                        </span>
                       </button>
+                      {serverMsg && (
+                        <div
+                          className="validation-error"
+                          style={{
+                            color: "green",
+                            fontSize: "100%",
+                            fontWeight: "600",
+                            padding: "25px",
+                          }}
+                          role="alert">
+                          {serverMsg}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </form>

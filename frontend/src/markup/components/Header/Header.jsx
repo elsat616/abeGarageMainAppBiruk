@@ -3,7 +3,12 @@ import React from "react";
 // import the logo image
 import logo from "../../../assets/images/logo.png";
 
+// import the custom context hook
+import { useAuth } from "../../../Context/AuthContext";
+
 function Header() {
+  console.log(useAuth());
+
   return (
     <div>
       <header className="main-header header-style-one">

@@ -31,7 +31,7 @@ async function createEmployee(req, res, next) {
         });
       } else {
         res.status(200).json({
-          status: "True, (Employee added successfully!)",
+          status: "Employee added successfully! ",
         });
       }
     } catch (error) {

@@ -1,6 +1,111 @@
-import React from 'react';
+import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import loginEmployee from "../../../services/login.services";
+import { BeatLoader } from "react-spinners";
 
 function LoginForm(props) {
+  const navigate = useNavigate();
+  const [employee_email, setEmail] = useState("");
+  const [employee_password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [serverError, setServerError] = useState("");
+  const [serverMsg, setServerMsg] = useState("");
+
+  // spinner handler state
+  const [spin, setSpinner] = useState(false);
+
+  // tracQer
+  const emailDom = useRef();
+  const passwordDom = useRef();
+
+  // console.log(employee_password);
+
+  // email value tracker
+  function emailTracker() {
+    setEmail(emailDom.current.value);
+  }
+
+  // password value tracker
+  function passwordTracker() {
+    setPassword(passwordDom.current.value);
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    // Handle client side validations here
+    let valid = true; // Flag
+
+    // Email is Required
+    if (!employee_email) {
+      setEmailError("Please enter your email address");
+      valid = false;
+    } else if (!employee_email.includes("@")) {
+      setEmailError("Invalid email format");
+    } else {
+      const regex = /^\S+@\S+\.\S+$/;
+      if (!regex.test(employee_email)) {
+        setEmailError("Invalid email format");
+        valid = false;
+      } else {
+        setEmailError("");
+      }
+    }
+
+    // Password has to be at least 6 characters long
+    if (!employee_password || employee_password.length < 6) {
+      setPasswordError("Password must be at least 6 characters long");
+      setTimeout(() => {
+        setPasswordError("");
+      }, 2000);
+      valid = false;
+    } else {
+      setPasswordError("");
+    }
+
+    if (!valid) {
+      return;
+    }
+
+    // Handle server side validations here
+    const formData = {
+      employee_email,
+      employee_password,
+    };
+
+    try {
+      const { data } = await loginEmployee(formData);
+
+      // console.log(data.message);
+
+      setSpinner(!spin);
+
+      // Save the employee token in the local storage
+      if (data.status === "success") {
+        if (data.data.employee_token) {
+          localStorage.setItem("employee", JSON.stringify(data.data));
+        }
+
+        if (data.message) {
+          setServerMsg(data.message + "! redirecting to home");
+
+          setTimeout(() => {
+            setServerMsg("");
+            setSpinner(!spin);
+            navigate("/");
+          }, 2000);
+        }
+      }
+    } catch (error) {
+      console.log(error.response.data);
+      setServerError(error.response.data.message);
+      setTimeout(() => {
+        setServerError("");
+      }, 2000);
+    }
+  }
+
   return (
     <section className="contact-section">
       <div className="auto-container">
@@ -11,16 +116,78 @@ function LoginForm(props) {
           <div className="form-column col-lg-7">
             <div className="inner-column">
               <div className="contact-form">
-                <form>
+                <form onSubmit={handleSubmit}>
                   <div className="row clearfix">
+                    {/* Email */}
+
                     <div className="form-group col-md-12">
-                      <input type="email" name="employee_email" placeholder="Email" />
+                      {serverError && (
+                        <div className="validation-error" role="alert">
+                          {serverError}
+                        </div>
+                      )}
+                      <input
+                        type="email"
+                        name="employee_email"
+                        placeholder="Email"
+                        value={employee_email}
+                        ref={emailDom}
+                        onChange={emailTracker}
+                        required
+                      />
+                      {emailError && (
+                        <div className="validation-error" role="alert">
+                          {emailError}
+                        </div>
+                      )}
                     </div>
+
+                    {/* Password */}
                     <div className="form-group col-md-12">
-                      <input type="password" name="employee_password" placeholder="Password" />
+                      <input
+                        type="password"
+                        name="employee_password"
+                        placeholder="Password"
+                        value={employee_password}
+                        ref={passwordDom}
+                        onChange={passwordTracker}
+                        required
+                      />
+                      {passwordError && (
+                        <div className="validation-error" role="alert">
+                          {passwordError}
+                        </div>
+                      )}
                     </div>
+
+                    {/* Button */}
                     <div className="form-group col-md-12">
-                      <button className="theme-btn btn-style-one" type="submit" data-loading-text="Please wait..."><span>Login</span></button>
+                      <button
+                        className="theme-btn btn-style-one"
+                        type="submit"
+                        data-loading-text="Please wait...">
+                        <span>
+                          {" "}
+                          {spin ? (
+                            <BeatLoader color="white" size={8} />
+                          ) : (
+                            "Login"
+                          )}
+                        </span>
+                      </button>
+                      {serverMsg && (
+                        <div
+                          className="validation-error"
+                          style={{
+                            color: "green",
+                            fontSize: "100%",
+                            fontWeight: "600",
+                            padding: "25px",
+                          }}
+                          role="alert">
+                          {serverMsg}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </form>

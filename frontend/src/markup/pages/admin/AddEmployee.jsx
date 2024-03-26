@@ -4,21 +4,56 @@ import AddEmployeeForm from "../../components/Admin/AddEmployeeForm/AddEmployeeF
 // Import the AdminMenu component
 import AdminMenu from "../../components/Admin/AdminMenu/AdminMenu";
 
+// import the auth hook context
+import { useAuth } from "../../../Context/AuthContext";
+
+// import the login component
+import LoginForm from "../../components/LoginForm/LoginForm";
+
 function AddEmployee(props) {
-  return (
-    <div>
-      <div className="container-fluid admin-pages">
-        <div className="row">
-          <div className="col-md-3 admin-left-side">
-            <AdminMenu />
-          </div>
-          <div className="col-md-9 admin-right-side">
-            <AddEmployeeForm />
+  const { isLogged, isAdmin } = useAuth();
+
+  if (isLogged) {
+    if (isAdmin) {
+      return (
+        <div>
+          <div className="container-fluid admin-pages">
+            <div className="row">
+              <div className="col-md-3 admin-left-side">
+                <AdminMenu />
+              </div>
+              <div className="col-md-9 admin-right-side">
+                <AddEmployeeForm />
+              </div>
+            </div>
           </div>
         </div>
+      );
+    } else {
+      return (
+        <div>
+          <h1 style={{ padding: "100px" }}>
+            You don't have the Permission to access the page you request!
+          </h1>
+        </div>
+      );
+    }
+  } else {
+    return (
+      <div>
+        <h5
+          style={{
+            color: "red",
+            paddingLeft: "320px",
+            position: "absolute",
+            top: "300px",
+          }}>
+          You must login frist!
+        </h5>
+        <LoginForm />
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default AddEmployee;

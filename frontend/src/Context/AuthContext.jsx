@@ -25,7 +25,7 @@ function AuthProvider({ children }) {
     const loggedInEmployee = getAuth();
 
     loggedInEmployee.then((response) => {
-      console.log(response)
+      // console.log(response)
 
       // set islogged to true
       if (response.employee_token) {

@@ -3,11 +3,26 @@ import React from "react";
 // import the logo image
 import logo from "../../../assets/images/logo.png";
 
+// import components from react router dom
+import { Link } from "react-router-dom";
+
 // import the custom context hook
 import { useAuth } from "../../../Context/AuthContext";
 
+// import the login service to access the logout function
+import { logOut } from "../../../services/login.services";
+
 function Header() {
-  console.log(useAuth());
+  const { isLogged, setIsLogged, employee } = useAuth();
+  // console.log(employee);
+
+  // LogOut event handler
+  const handleLogOut = () => {
+    logOut();
+
+    // set the isLogged state to false
+    setIsLogged(false);
+  };
 
   return (
     <div>
@@ -22,10 +37,22 @@ function Header() {
                 </div>
               </div>
               <div className="right-column">
-                <div className="phone-number">
-                  Schedule Your Appontment Today :{" "}
-                  <strong>1800 456 7890</strong>
-                </div>
+                {isLogged ? (
+                  <div className="link-btn">
+                    <div className="phone-number">
+                      <strong style={{ paddingRight: "10px" }}>
+                        Welcome : {employee?.employee_first_name}
+                      </strong>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="phone-number">
+                    Schedule Appointment :
+                    <strong style={{ paddingRight: "10px" }}>
+                      1800 456 7890
+                    </strong>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -35,9 +62,9 @@ function Header() {
             <div className="inner-container">
               <div className="logo-box">
                 <div className="logo">
-                  <a href="/">
+                  <Link to="/">
                     <img src={logo} alt="header_logo" />
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="right-column">
@@ -51,27 +78,39 @@ function Header() {
                       id="navbarSupportedContent">
                       <ul className="navigation">
                         <li className="dropdown">
-                          <a href="/">Home</a>
+                          <Link to="/">Home</Link>
                         </li>
                         <li className="dropdown">
-                          <a href="/about">About Us</a>
+                          <Link to="/about">About Us</Link>
                         </li>
                         <li className="dropdown">
-                          <a href="/services">Services</a>
+                          <Link to="/services">Services</Link>
                         </li>
                         <li>
-                          <a href="/contact">Contact Us</a>
+                          <Link to="/contact">Contact Us</Link>
                         </li>
                       </ul>
                     </div>
                   </nav>
                 </div>
                 <div className="search-btn"></div>
-                <div className="link-btn">
-                  <a href="/login" className="theme-btn btn-style-one">
-                    Login
-                  </a>
-                </div>
+
+                {isLogged ? (
+                  <div className="link-btn">
+                    <Link
+                      to="/"
+                      className="theme-btn btn-style-one blue"
+                      onClick={handleLogOut}>
+                      Logout
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="link-btn">
+                    <Link to="/login" className="theme-btn btn-style-one">
+                      Login
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>

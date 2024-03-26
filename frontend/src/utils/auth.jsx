@@ -2,7 +2,7 @@
 async function getAuth() {
   const employee = await JSON.parse(localStorage.getItem("employee"));
 
-  console.log(employee)
+  // console.log(employee)
 
   if (employee && employee.employee_token) {
     const decodedToken = await decodeTokenPayload(employee.employee_token);

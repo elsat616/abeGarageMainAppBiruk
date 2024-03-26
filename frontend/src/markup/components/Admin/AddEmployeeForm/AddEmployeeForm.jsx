@@ -3,9 +3,11 @@ import createEmployee from "../../../../services/employee.services";
 import { useNavigate } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 
+// import the useAuth hook
+import { useAuth } from "../../../../Context/AuthContext";
+
 function AddEmployeeForm(props) {
   const navigate = useNavigate();
-
   const [employee_email, setEmail] = useState("");
   const [employee_first_name, setFirstName] = useState("");
   const [employee_last_name, setLastName] = useState("");
@@ -25,6 +27,14 @@ function AddEmployeeForm(props) {
   const [PasswordError, setPasswordError] = useState("");
   const [succes, setSucces] = useState(false);
   const [serverMsg, setServerMsg] = useState("");
+
+  // create a variable to hold the users token
+  let loggedInEmployeeToken = "";
+  // destructure the auth hook and get the token
+  const { employee } = useAuth();
+  if (employee && employee.employee_token) {
+    loggedInEmployeeToken = employee.employee_token;
+  }
 
   // target
   const emailDom = useRef();
@@ -144,13 +154,11 @@ function AddEmployeeForm(props) {
 
     try {
       setSpinner(!spin);
-      setTimeout(() => {
-        setSpinner(false);
-      }, 2000);
-      const { data } = await createEmployee(formData);
 
-      if (data.msg) {
-        setEmailError(data.msg);
+      const { data } = await createEmployee(formData, loggedInEmployeeToken);
+
+      if (data?.msg) {
+        setEmailError(data?.msg);
 
         setTimeout(() => {
           setServerMsg("");
@@ -181,6 +189,7 @@ function AddEmployeeForm(props) {
 
       setTimeout(() => {
         setEmailError("");
+        setSpinner(false);
       }, 3000);
     }
   }

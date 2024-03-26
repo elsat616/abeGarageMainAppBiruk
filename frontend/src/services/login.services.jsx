@@ -6,4 +6,8 @@ async function loginEmployee(formData) {
   return data;
 }
 
+export function logOut() {
+  localStorage.removeItem("employee");
+}
+
 export default loginEmployee;

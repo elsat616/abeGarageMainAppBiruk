@@ -1,10 +1,11 @@
 import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import loginEmployee from "../../../services/login.services";
 import { BeatLoader } from "react-spinners";
 
 function LoginForm(props) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const location = useLocation();
   const [employee_email, setEmail] = useState("");
   const [employee_password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -88,12 +89,16 @@ function LoginForm(props) {
         }
 
         if (data.message) {
-          setServerMsg(data.message + "! redirecting to home");
+          setServerMsg(data.message + "! Redirecting Page");
 
           setTimeout(() => {
             setServerMsg("");
             setSpinner(!spin);
-            navigate("/");
+            if (location.pathname === "/login") {
+              window.location.replace("/");
+            } else {
+              window.location.reload();
+            }
           }, 2000);
         }
       }

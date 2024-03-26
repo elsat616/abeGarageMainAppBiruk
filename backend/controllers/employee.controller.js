@@ -7,7 +7,7 @@ const {
 async function createEmployee(req, res, next) {
   const { employee_email } = req.body;
 
-  // console.log(employee_email);
+  // console.log(req.headers);
 
   const employeeExists = await checkIfEmployeeExists(employee_email);
 

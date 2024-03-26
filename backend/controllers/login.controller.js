@@ -30,9 +30,11 @@ async function logIn(req, res, next) {
     const payload = {
       employee_id: employee.employee.employee_id,
       employee_email: employee.employee.employee_email,
-      employee_role: employee.employee.employee_role,
+      employee_role: employee.employee.company_role_id,
       employee_first_name: employee.employee.employee_first_name,
     };
+
+    // console.log(payload);
 
     const token = jwt.sign(payload, jwtSecret, {
       expiresIn: "24h",

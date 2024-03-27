@@ -1,5 +1,6 @@
 import axios from "../axiosConfig";
 
+// A function to send post request to create a new employee
 async function createEmployee(formData, loggedInEmployeeToken) {
   // define your headers
   const headers = {
@@ -11,7 +12,20 @@ async function createEmployee(formData, loggedInEmployeeToken) {
   return data;
 }
 
+// A function to send get request to get all employees
+async function getAllEmployees(token) {
+  const headers = {
+    "x-access-token": token,
+  };
 
+  const data = await axios.get("/api/employees", { headers });
 
+  return data;
+}
 
-export default createEmployee;
+const employeeService = {
+  createEmployee,
+  getAllEmployees,
+};
+
+export default employeeService;

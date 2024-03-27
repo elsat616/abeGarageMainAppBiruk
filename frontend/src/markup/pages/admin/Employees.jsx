@@ -6,14 +6,30 @@ import { useAuth } from "../../../Context/AuthContext";
 // import the login component
 import LoginForm from "../../components/LoginForm/LoginForm";
 
+// import the admin menu component
+import AdminMenu from "../../components/Admin/AdminMenu/AdminMenu";
+
+import EmployeesList from "../../components/Admin/EmployeesList/EmployeesList";
+
 function Employees() {
-  const { isLogged, isAdmin } = useAuth();
+  const { isLogged, isAdmin_manager } = useAuth();
+
+  // console.log(useAuth())
 
   if (isLogged) {
-    if (isAdmin) {
+    if (isAdmin_manager) {
       return (
         <div>
-          <h1>Employees page</h1>
+          <div className="container-fluid admin-pages">
+            <div className="row">
+              <div className="col-md-3 admin-left-side">
+                <AdminMenu />
+              </div>
+              <div className="col-md-9 admin-right-side">
+                <EmployeesList />
+              </div>
+            </div>
+          </div>
         </div>
       );
     } else {

@@ -17,8 +17,21 @@ function AuthProvider({ children }) {
   const [employee, setEmployee] = useState(null);
   const [isLogged, setIsLogged] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin_manager, setIsAdmin_Manager] = useState(false);
+  const [isAdmin_manager_employee, setIsAdmin_Manager_employee] =
+    useState(false);
 
-  const value = { isLogged, isAdmin, setIsAdmin, setIsLogged, employee };
+  const value = {
+    isLogged,
+    isAdmin,
+    isAdmin_manager,
+    isAdmin_manager_employee,
+    setIsAdmin,
+    setIsLogged,
+    setIsAdmin_Manager,
+    setIsAdmin_Manager_employee,
+    employee,
+  };
 
   useEffect(() => {
     // retrive the logged in user from local storage
@@ -35,6 +48,16 @@ function AuthProvider({ children }) {
       // 3 is the employe role for admin
       if (response.employee_role === 3) {
         setIsAdmin(true);
+      }
+
+      // 3 & 2 is the employe role for admin & manager
+      if (response.employee_role === 3 || 2) {
+        setIsAdmin_Manager(true);
+      }
+
+      // 3,2 & 1 is the employe role for admin,manager & employee
+      if (response.employee_role === 3 || 2 || 1) {
+        setIsAdmin_Manager_employee(true);
       }
 
       //set the whole response on employee

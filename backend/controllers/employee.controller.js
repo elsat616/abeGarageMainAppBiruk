@@ -2,6 +2,7 @@
 const {
   checkIfEmployeeExists,
   createEmploye,
+  getAllEmployees,
 } = require("../services/employee.service");
 
 async function createEmployee(req, res, next) {
@@ -43,4 +44,29 @@ async function createEmployee(req, res, next) {
   }
 }
 
-module.exports = { createEmployee };
+async function getAllEmployeees(req, res, next) {
+  try {
+    // call the getAllEmployees methosd from the emplyees service
+    const employees = await getAllEmployees();
+
+    // console.log(employees);
+
+    if (!employees) {
+      res.status(400).json({
+        error: "Failed to get all employee!",
+      });
+    } else {
+      res.status(200).json({
+        status: "Employees retrieved successfully! ",
+        employees: employees,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: "Something went wrong!",
+    });
+  }
+}
+
+module.exports = { createEmployee, getAllEmployeees };

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import createEmployee from "../../../../services/employee.services";
+import employeeService from "../../../../services/employee.services";
 import { useNavigate } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 
@@ -155,7 +155,10 @@ function AddEmployeeForm(props) {
     try {
       setSpinner(!spin);
 
-      const { data } = await createEmployee(formData, loggedInEmployeeToken);
+      const { data } = await employeeService.createEmployee(
+        formData,
+        loggedInEmployeeToken
+      );
 
       if (data?.msg) {
         setEmailError(data?.msg);

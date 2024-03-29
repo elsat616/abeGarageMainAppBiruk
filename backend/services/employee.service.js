@@ -4,6 +4,7 @@ const connection = require("../config/db.config");
 // Import the bcrypt module
 const bcrypt = require("bcrypt");
 
+// A function to check employee existance
 async function checkIfEmployeeExists(email) {
   const query = "SELECT * FROM employee Where employee_email = ?";
 
@@ -18,6 +19,7 @@ async function checkIfEmployeeExists(email) {
   }
 }
 
+// A function to  create employee
 async function createEmploye(employee) {
   let createdEmployee = {};
 
@@ -111,9 +113,69 @@ async function getAllEmployees() {
   return rows;
 }
 
+// A function to update employees by id
+async function updateEmploye(employee) {
+  const employee_id = employee.employee_id;
+
+  // console.log(employee_id);
+
+  const query1 = ` UPDATE employee_info SET employee_first_name = ?, employee_last_name = ?, employee_phone = ? WHERE employee_id = ?`;
+
+  const query2 = `UPDATE employee_role SET company_role_id = ? WHERE employee_id = ?`;
+
+  const query3 = `UPDATE employee SET active_employee = ? WHERE employee_id = ?`;
+
+  // for employee_info table
+  const rows1 = await connection.query(query1, [
+    employee.employee_first_name,
+    employee.employee_last_name,
+    employee.employee_phone,
+    employee_id,
+  ]);
+
+  // for employee_role table
+  const rows2 = await connection.query(query2, [
+    employee.company_role_id,
+    employee_id,
+  ]);
+
+  // for employee table
+  const rows3 = await connection.query(query3, [
+    employee.active_employee,
+    employee_id,
+  ]);
+
+  return { rows1, rows2, rows3 };
+}
+
+// A function to delete employees by id
+async function deleteEmploye(employee_id) {
+  console.log(employee_id);
+
+  const query1 = "DELETE FROM employee_info WHERE  employee_id = ?";
+
+  const query2 = "DELETE FROM employee_role WHERE employee_id = ?";
+
+  const query3 = "DELETE FROM employee_pass WHERE employee_id = ?";
+
+  const query4 = "DELETE FROM employee WHERE employee_id = ?";
+
+  const rows1 = await connection.query(query1, [employee_id]);
+
+  const rows2 = await connection.query(query2, [employee_id]);
+
+  const rows3 = await connection.query(query3, [employee_id]);
+
+  const rows4 = await connection.query(query4, [employee_id]);
+
+  return { rows1, rows2, rows3, rows4 };
+}
+
 module.exports = {
   checkIfEmployeeExists,
   createEmploye,
   getEmployeeByEmail,
   getAllEmployees,
+  updateEmploye,
+  deleteEmploye,
 };

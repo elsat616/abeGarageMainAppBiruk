@@ -3,8 +3,11 @@ const {
   checkIfEmployeeExists,
   createEmploye,
   getAllEmployees,
+  updateEmploye,
+  deleteEmploye,
 } = require("../services/employee.service");
 
+// create Employee controller
 async function createEmployee(req, res, next) {
   const { employee_email } = req.body;
 
@@ -44,6 +47,7 @@ async function createEmployee(req, res, next) {
   }
 }
 
+// get all Employee data controller
 async function getAllEmployeees(req, res, next) {
   try {
     // call the getAllEmployees methosd from the emplyees service
@@ -69,4 +73,69 @@ async function getAllEmployeees(req, res, next) {
   }
 }
 
-module.exports = { createEmployee, getAllEmployeees };
+// update Employee controller
+async function updateEmployee(req, res, next) {
+  try {
+    const updateEmployee = await updateEmploye(req.body);
+
+    // console.log(updateEmployee);
+
+    // the returned rows value
+    const rows1 = updateEmployee.rows1.affectedRows;
+    const rows2 = updateEmployee.rows2.affectedRows;
+    const rows3 = updateEmployee.rows3.affectedRows;
+
+    // console.log(rows1)
+    // console.log(rows2)
+    // console.log(rows3)
+
+    if (!updateEmployee) {
+      res.status(400).json({
+        error: "Failed to Update Employee",
+      });
+    } else if (rows1 && rows2 && rows3 === 1) {
+      res.status(200).json({
+        status: "Employee Succesfully Updated! ",
+      });
+    } else {
+      res.status(400).json({
+        status: "Update Incomplete!",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: "Something went wrong!",
+    });
+  }
+}
+
+// delete Employee controller
+async function deleteEmployee(req, res, next) {
+  const { employee_id } = req.body;
+  try {
+    const deleteEmployee = await deleteEmploye(employee_id);
+
+    if (!deleteEmploye) {
+      res.status(200).json({
+        error: "Delete Incomplete!",
+      });
+    } else {
+      res.status(400).json({
+        status: "Employee Succesfully Delete!",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: "Something went wrong!",
+    });
+  }
+}
+
+module.exports = {
+  createEmployee,
+  getAllEmployeees,
+  updateEmployee,
+  deleteEmployee,
+};

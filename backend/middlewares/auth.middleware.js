@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 // import the employee service
 const employeeService = require("../services/employee.service");
 
+// checks if the employee is logged in
 async function verifyToken(req, res, next) {
   let token = req.headers["x-access-token"];
   // console.log(token)
@@ -30,8 +31,7 @@ async function verifyToken(req, res, next) {
   });
 }
 
-///////////////////
-
+// checks if the employee is an Admin
 async function isAdmin(req, res, next) {
   let token = req.headers["x-access-token"];
 
@@ -51,6 +51,7 @@ async function isAdmin(req, res, next) {
   }
 }
 
+// checks if the employee is a Manager
 async function isAdmin_Manager(req, res, next) {
   //   let token = req.headers["x-access-token"];
 
@@ -70,6 +71,7 @@ async function isAdmin_Manager(req, res, next) {
   }
 }
 
+// checks if it is an employee
 async function isAdmin_Manager_Employee(req, res, next) {
   //   let token = req.headers["x-access-token"];
 
@@ -96,5 +98,5 @@ const authmiddleware = {
   isAdmin_Manager_Employee,
 };
 
-//////////
+/////////////////////////
 module.exports = authmiddleware;

@@ -28,5 +28,19 @@ router.get(
   employeeController.getAllEmployeees
 );
 
+// create a route to handle the employee request in put
+router.put(
+  "/api/employee/update",
+  [verifyToken, isAdmin],
+  employeeController.updateEmployee
+);
+
+// create a route to handle the employee request in delete
+router.delete(
+  "/api/employee/delete",
+  [verifyToken, isAdmin],
+  employeeController.deleteEmployee
+);
+
 // export the router
 module.exports = router;

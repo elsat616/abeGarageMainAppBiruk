@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 
+import { Link } from "react-router-dom";
+
 // import recat components
 import { Table, Button } from "react-bootstrap";
+
+// import react icons
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
 // import the auth hook
 import { useAuth } from "../../../../Context/AuthContext";
@@ -111,7 +117,17 @@ function EmployeesList() {
                       )}
                     </td>
                     <td>{employe.company_role_name}</td>
-                    <td>Edit/Delete</td>
+                    <td className="edit">
+                      <span className="hover1">
+                        <Link to="/admin/employee-update">
+                          <FaEdit color="#081336" />
+                        </Link>
+                      </span>
+
+                      <span className="hover">
+                        <MdDelete color="#DC3545" />
+                      </span>
+                    </td>
                   </tr>
                 ))}
               </tbody>

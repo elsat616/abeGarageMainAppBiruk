@@ -23,9 +23,27 @@ async function getAllEmployees(token) {
   return data;
 }
 
+// A function to employee update request
+async function updateEmployee(formData, loggedInEmployeeToken) {
+  try {
+    const headers = {
+      "x-access-token": loggedInEmployeeToken,
+    };
+
+    const data = await axios.put("/api/employee/update", formData, { headers });
+
+    console.log(data);
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 const employeeService = {
   createEmployee,
   getAllEmployees,
+  updateEmployee,
 };
 
 export default employeeService;

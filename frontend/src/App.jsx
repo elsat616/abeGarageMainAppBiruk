@@ -11,6 +11,7 @@ import Unauthorized from "./markup/pages/Unauthorized";
 import Orders from "./markup/pages/admin/Orders";
 import Customers from "./markup/pages/admin/Customers";
 import Employees from "./markup/pages/admin/Employees";
+import EditEmployee from "./markup/pages/admin/EditEmployee";
 
 // Import the header and footer components
 import Header from "./markup/components/Header/Header";
@@ -64,6 +65,9 @@ function App() {
 
         {/* Employees page route */}
         <Route path="/admin/employees" element={<Employees />} />
+
+        {/* Edit Employees page route */}
+        <Route path="/admin/employee-update" element={<EditEmployee />} />
 
         {/* add employee page route */}
         <Route path="/admin/add-employee" element={<AddEmployee />} />

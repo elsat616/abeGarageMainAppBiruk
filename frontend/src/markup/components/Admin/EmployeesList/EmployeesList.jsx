@@ -24,6 +24,7 @@ function EmployeesList() {
   const [employees, setEmployees] = useState([]);
   const [ddd, setddd] = useState("");
 
+  console.log(employees);
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -87,7 +88,7 @@ function EmployeesList() {
   function handleEdit(id) {
     navigate(`/admin/employee-update/${id}`);
   }
-  console.log(ddd);
+
   return (
     <>
       {apiError ? (
@@ -124,8 +125,7 @@ function EmployeesList() {
                 {employees.map((employe) => (
                   <tr
                     key={employe.employee_id}
-                    onClick={() => handleEdit(employe.employee_id)}
-                  >
+                    onClick={() => handleEdit(employe.employee_hash)}>
                     <td>{employe.active_employee ? "Yes" : "No"}</td>
                     <td>{employe.employee_first_name}</td>
                     <td>{employe.employee_last_name}</td>
@@ -145,8 +145,7 @@ function EmployeesList() {
 
                       <span
                         className="hover"
-                        onClick={() => handleDelete(employe.employee_id)}
-                      >
+                        onClick={() => handleDelete(employe.employee_id)}>
                         <MdDelete color="#DC3545" />
                       </span>
                     </td>

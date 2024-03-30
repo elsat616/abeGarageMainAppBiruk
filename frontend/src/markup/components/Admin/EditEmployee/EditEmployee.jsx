@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { BeatLoader } from "react-spinners";
 
 // import employee service
@@ -8,17 +8,17 @@ import employeeService from "../../../../services/employee.services";
 import { useAuth } from "../../../../Context/AuthContext";
 
 // import react router dom
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function EditEmployee() {
+  const navigate = useNavigate();
   const [employee_first_name, setFirstName] = useState("");
   const [employee_last_name, setLastName] = useState("");
   const [employee_phone, setPhoneNumber] = useState("");
   const [company_role_id, setCompany_role_id] = useState(1);
+  const [active_employee, setActiveEmployee] = useState(1);
 
-  const { id } = useParams();
-
-  console.log(id);
+  const { employee_hash } = useParams();
 
   // console.log(employee_first_name);
   // console.log(employee_last_name);
@@ -59,6 +59,45 @@ function EditEmployee() {
     setCompany_role_id(companyRoleIdDom.current.value);
   }
 
+  // fetch employee data using useEffect
+  useEffect(() => {
+    const fetchData = async (employee_hash, loggedInEmployeeToken) => {
+      try {
+        const formData = {
+          employee_hash,
+        };
+        console.log(formData);
+
+        const data = await employeeService.singleEmployee(
+          formData,
+          loggedInEmployeeToken
+        );
+        console.log("dataeeeeeeeeeeeeeeeeee");
+
+        // if (data?.statusText !== "OK") {
+        //   // set apiError to true
+        //   setApiError(true);
+
+        //   if (data?.status === 403) {
+        //     setApiErrorMessage("Please login again");
+        //   } else if (data?.status === 401) {
+        //     setApiErrorMessage("You are not Authorized to view this page");
+        //   } else {
+        //     setApiErrorMessage("Please try again laterrrr");
+        //   }
+        // }
+
+        // set employees data
+        // setEmployees(data?.data?.employees);
+
+        // console.log(data?.data.employees);
+      } catch (error) {
+        console.log("error");
+      }
+    };
+    fetchData(employee_hash, loggedInEmployeeToken);
+  }, []);
+
   async function handleSubmit(e) {
     // prevent the default behavior of the form submission
     e.preventDefault();
@@ -69,6 +108,8 @@ function EditEmployee() {
       employee_last_name,
       employee_phone,
       company_role_id,
+      employee_hash,
+      active_employee,
     };
 
     try {
@@ -76,6 +117,9 @@ function EditEmployee() {
         FormData,
         loggedInEmployeeToken
       );
+
+      // alert("grooddddddddddddddddddddddd");
+      navigate("/admin/employees");
     } catch (error) {
       console.log(error);
     }
@@ -157,8 +201,7 @@ function EditEmployee() {
                         ref={companyRoleIdDom}
                         value={company_role_id}
                         onChange={companyRoleIdTracker}
-                        required
-                      >
+                        required>
                         <option value="1">Employee</option>
                         <option value="2">Manager</option>
                         <option value="3">Admin</option>
@@ -171,8 +214,7 @@ function EditEmployee() {
                         // onClick={spinner}
                         className="theme-btn btn-style-one"
                         type="submit"
-                        data-loading-text="Please wait..."
-                      >
+                        data-loading-text="Please wait...">
                         <span>
                           {!"spin" ? (
                             <BeatLoader color="white" size={8} />
@@ -190,8 +232,7 @@ function EditEmployee() {
                             fontWeight: "600",
                             padding: "25px",
                           }}
-                          role="alert"
-                        >
+                          role="alert">
                           {/* {serverMsg} */}
                         </div>
                       )}

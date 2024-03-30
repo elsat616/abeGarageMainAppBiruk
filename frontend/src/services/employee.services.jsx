@@ -36,10 +36,24 @@ async function updateEmployee(formData, loggedInEmployeeToken) {
   return data;
 }
 
+// a function to get single employee
+async function singleEmployee(formData, loggedInEmployeeToken) {
+  const headers = {
+    "x-access-token": loggedInEmployeeToken,
+  };
+
+  const data = await axios.get("/api/employee/single", formData, { headers });
+
+  // console.log(data);
+
+  return data;
+}
+
 const employeeService = {
   createEmployee,
   getAllEmployees,
   updateEmployee,
+  singleEmployee,
 };
 
 export default employeeService;

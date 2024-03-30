@@ -7,7 +7,6 @@ const jwt = require("jsonwebtoken");
 // import the employee service
 const employeeService = require("../services/employee.service");
 
-// checks if the employee is logged in
 async function verifyToken(req, res, next) {
   let token = req.headers["x-access-token"];
   // console.log(token)
@@ -31,7 +30,8 @@ async function verifyToken(req, res, next) {
   });
 }
 
-// checks if the employee is an Admin
+///////////////////
+
 async function isAdmin(req, res, next) {
   let token = req.headers["x-access-token"];
 
@@ -51,7 +51,6 @@ async function isAdmin(req, res, next) {
   }
 }
 
-// checks if the employee is a Manager
 async function isAdmin_Manager(req, res, next) {
   //   let token = req.headers["x-access-token"];
 
@@ -59,9 +58,11 @@ async function isAdmin_Manager(req, res, next) {
   // console.log(req.employee_email)
 
   const employee = await employeeService.getEmployeeByEmail(employee_email);
-  // console.log(employee)
+  console.log(employee[0]);
 
-  if (employee[0].company_role_id === (3 || 2)) {
+  if (employee[0].company_role_id === 3) {
+    next();
+  } else if (employee[0].company_role_id === 2) {
     next();
   } else {
     return res.status(403).send({
@@ -71,7 +72,6 @@ async function isAdmin_Manager(req, res, next) {
   }
 }
 
-// checks if it is an employee
 async function isAdmin_Manager_Employee(req, res, next) {
   //   let token = req.headers["x-access-token"];
 
@@ -81,7 +81,12 @@ async function isAdmin_Manager_Employee(req, res, next) {
   const employee = await employeeService.getEmployeeByEmail(employee_email);
   console.log(employee);
 
-  if (employee[0].company_role_id === (3 || 2 || 1)) {
+  if (employee[0].company_role_id === 3) {
+    next();
+  } else if (employee[0].company_role_id === 2) {
+    next();
+  }
+  if (employee[0].company_role_id === 1) {
     next();
   } else {
     return res.status(403).send({
@@ -90,6 +95,7 @@ async function isAdmin_Manager_Employee(req, res, next) {
     });
   }
 }
+
 ////////////////////////
 const authmiddleware = {
   verifyToken,
@@ -98,5 +104,5 @@ const authmiddleware = {
   isAdmin_Manager_Employee,
 };
 
-/////////////////////////
+//////////
 module.exports = authmiddleware;

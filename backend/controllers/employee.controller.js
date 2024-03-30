@@ -17,7 +17,7 @@ async function createEmployee(req, res, next) {
 
   // if employee exists, send a response to a client
   if (employeeExists) {
-    res.status(400).json({
+    return res.status(400).json({
       msg: "This email address is already associated with  another employee!",
     });
   } else {
@@ -30,17 +30,17 @@ async function createEmployee(req, res, next) {
       // console.log(employee);
 
       if (!employee) {
-        res.status(400).json({
+        return res.status(400).json({
           error: "Failed to add the employee!",
         });
       } else {
-        res.status(200).json({
+        return res.status(200).json({
           status: "Employee added successfully! ",
         });
       }
     } catch (error) {
       console.log(error);
-      res.status(400).json({
+      return res.status(400).json({
         error: "Something went wrong!",
       });
     }
@@ -93,7 +93,7 @@ async function updateEmployee(req, res, next) {
       res.status(400).json({
         error: "Failed to Update Employee",
       });
-    } else if (rows1 && rows2 && rows3 === 1) {
+    } else if (rows1 === 1 && rows2 === 1 && rows3 === 1) {
       res.status(200).json({
         status: "Employee Succesfully Updated! ",
       });

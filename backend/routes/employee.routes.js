@@ -38,7 +38,7 @@ router.put(
 // create a route to handle the employee request in delete
 router.delete(
   "/api/employee/delete",
-  [verifyToken, isAdmin],
+  // [verifyToken, isAdmin],
   employeeController.deleteEmployee
 );
 

@@ -175,7 +175,7 @@ function AddEmployeeForm(props) {
         setTimeout(() => {
           setServerMsg("");
           setSpinner(!spin);
-          navigate("/");
+          navigate("/admin/employees");
         }, 700);
       }
 
@@ -291,7 +291,8 @@ function AddEmployeeForm(props) {
                         ref={companyRoleIdDom}
                         value={company_role_id}
                         onChange={companyRoleIdTracker}
-                        required>
+                        required
+                      >
                         <option value="1">Employee</option>
                         <option value="2">Manager</option>
                         <option value="3">Admin</option>
@@ -322,7 +323,8 @@ function AddEmployeeForm(props) {
                         // onClick={spinner}
                         className="theme-btn btn-style-one"
                         type="submit"
-                        data-loading-text="Please wait...">
+                        data-loading-text="Please wait..."
+                      >
                         <span>
                           {spin ? (
                             <BeatLoader color="white" size={8} />
@@ -340,7 +342,8 @@ function AddEmployeeForm(props) {
                             fontWeight: "600",
                             padding: "25px",
                           }}
-                          role="alert">
+                          role="alert"
+                        >
                           {serverMsg}
                         </div>
                       )}

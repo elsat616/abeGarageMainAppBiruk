@@ -12,12 +12,12 @@ import AdminMenu from "../../components/Admin/AdminMenu/AdminMenu";
 import EditEmploye from "../../components/Admin/EditEmployee/EditEmployee";
 
 function EditEmployee() {
-  const { isLogged, isAdmin_manager } = useAuth();
+  const { isLogged, isAdmin } = useAuth();
 
   // console.log(useAuth())
 
   if (isLogged) {
-    if (isAdmin_manager) {
+    if (isAdmin) {
       return (
         <div>
           <div className="container-fluid admin-pages">

@@ -7,11 +7,18 @@ import employeeService from "../../../../services/employee.services";
 // import the useAuth hook
 import { useAuth } from "../../../../Context/AuthContext";
 
+// import react router dom
+import { useParams } from "react-router-dom";
+
 function EditEmployee() {
   const [employee_first_name, setFirstName] = useState("");
   const [employee_last_name, setLastName] = useState("");
   const [employee_phone, setPhoneNumber] = useState("");
   const [company_role_id, setCompany_role_id] = useState(1);
+
+  const { id } = useParams();
+
+  console.log(id);
 
   // console.log(employee_first_name);
   // console.log(employee_last_name);
@@ -150,7 +157,8 @@ function EditEmployee() {
                         ref={companyRoleIdDom}
                         value={company_role_id}
                         onChange={companyRoleIdTracker}
-                        required>
+                        required
+                      >
                         <option value="1">Employee</option>
                         <option value="2">Manager</option>
                         <option value="3">Admin</option>
@@ -163,7 +171,8 @@ function EditEmployee() {
                         // onClick={spinner}
                         className="theme-btn btn-style-one"
                         type="submit"
-                        data-loading-text="Please wait...">
+                        data-loading-text="Please wait..."
+                      >
                         <span>
                           {!"spin" ? (
                             <BeatLoader color="white" size={8} />
@@ -181,7 +190,8 @@ function EditEmployee() {
                             fontWeight: "600",
                             padding: "25px",
                           }}
-                          role="alert">
+                          role="alert"
+                        >
                           {/* {serverMsg} */}
                         </div>
                       )}

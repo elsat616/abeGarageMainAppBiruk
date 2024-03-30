@@ -13,8 +13,16 @@ import { useAuth } from "../../../Context/AuthContext";
 import { logOut } from "../../../services/login.services";
 
 function Header() {
-  const { isLogged, setIsLogged, employee } = useAuth();
-  // console.log(employee);
+  const {
+    isLogged,
+    setIsLogged,
+    employee,
+    isAdmin,
+    isAdmin_manager_employee,
+    isAdmin_Manager,
+  } = useAuth();
+
+  // console.log(isAdmin_manager_employee);
 
   // LogOut event handler
   const handleLogOut = () => {
@@ -75,7 +83,8 @@ function Header() {
                   <nav className="main-menu navbar-expand-md navbar-light">
                     <div
                       className="collapse navbar-collapse show clearfix"
-                      id="navbarSupportedContent">
+                      id="navbarSupportedContent"
+                    >
                       <ul className="navigation">
                         <li className="dropdown">
                           <Link to="/">Home</Link>
@@ -89,6 +98,13 @@ function Header() {
                         <li>
                           <Link to="/contact">Contact Us</Link>
                         </li>
+                        {isAdmin_Manager ||
+                        isAdmin ||
+                        isAdmin_manager_employee ? (
+                          <li>
+                            <Link to="/admin">Admin</Link>
+                          </li>
+                        ) : null}
                       </ul>
                     </div>
                   </nav>
@@ -100,7 +116,8 @@ function Header() {
                     <Link
                       to="/"
                       className="theme-btn btn-style-one blue"
-                      onClick={handleLogOut}>
+                      onClick={handleLogOut}
+                    >
                       Logout
                     </Link>
                   </div>

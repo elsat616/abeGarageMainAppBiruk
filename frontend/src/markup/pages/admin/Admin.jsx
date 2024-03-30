@@ -1,23 +1,19 @@
 import React from "react";
 
+// Import the AdminMenu component
+import AdminMenu from "../../components/Admin/AdminMenu/AdminMenu";
+
 // import the auth hook context
 import { useAuth } from "../../../Context/AuthContext";
 
 // import the login component
 import LoginForm from "../../components/LoginForm/LoginForm";
 
-// import the admin menu component
-import AdminMenu from "../../components/Admin/AdminMenu/AdminMenu";
-
-import EmployeesList from "../../components/Admin/EmployeesList/EmployeesList";
-
-function Employees() {
-  const { isLogged, isAdmin_manager, isAdmin } = useAuth();
-
-  // console.log(useAuth())
+function Admin(props) {
+  const { isLogged, isAdmin } = useAuth();
 
   if (isLogged) {
-    if (isAdmin_manager || isAdmin) {
+    if (isAdmin) {
       return (
         <div>
           <div className="container-fluid admin-pages">
@@ -26,7 +22,7 @@ function Employees() {
                 <AdminMenu />
               </div>
               <div className="col-md-9 admin-right-side">
-                <EmployeesList />
+                <h1>Admin</h1>
               </div>
             </div>
           </div>
@@ -44,10 +40,20 @@ function Employees() {
   } else {
     return (
       <div>
+        <h5
+          style={{
+            color: "red",
+            paddingLeft: "320px",
+            position: "absolute",
+            top: "300px",
+          }}
+        >
+          You must login frist!
+        </h5>
         <LoginForm />
       </div>
     );
   }
 }
 
-export default Employees;
+export default Admin;

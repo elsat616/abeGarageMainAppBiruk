@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 // import recat components
 import { Table, Button } from "react-bootstrap";
@@ -17,9 +17,16 @@ import employeeService from "../../../../services/employee.services";
 
 // import the date-fns library
 import { format } from "date-fns";
+
+////////////////////////////////////////
 function EmployeesList() {
   //  employees state to store the emplooyes data
   const [employees, setEmployees] = useState([]);
+  const [ddd, setddd] = useState("");
+
+  const { id } = useParams();
+
+  const navigate = useNavigate();
 
   // console.log(employees[0].employee_id)
 
@@ -70,6 +77,17 @@ function EmployeesList() {
     fetchData();
   }, []);
 
+  // handle Delete
+  function handleDelete(id) {
+    setddd(id);
+    alert("kkk");
+    navigate(`/admin/employees`);
+  }
+
+  function handleEdit(id) {
+    navigate(`/admin/employee-update/${id}`);
+  }
+  console.log(ddd);
   return (
     <>
       {apiError ? (
@@ -104,7 +122,10 @@ function EmployeesList() {
               </thead>
               <tbody>
                 {employees.map((employe) => (
-                  <tr key={employe.employee_id}>
+                  <tr
+                    key={employe.employee_id}
+                    onClick={() => handleEdit(employe.employee_id)}
+                  >
                     <td>{employe.active_employee ? "Yes" : "No"}</td>
                     <td>{employe.employee_first_name}</td>
                     <td>{employe.employee_last_name}</td>
@@ -119,12 +140,13 @@ function EmployeesList() {
                     <td>{employe.company_role_name}</td>
                     <td className="edit">
                       <span className="hover1">
-                        <Link to="/admin/employee-update">
-                          <FaEdit color="#081336" />
-                        </Link>
+                        <FaEdit color="#081336" />
                       </span>
 
-                      <span className="hover">
+                      <span
+                        className="hover"
+                        onClick={() => handleDelete(employe.employee_id)}
+                      >
                         <MdDelete color="#DC3545" />
                       </span>
                     </td>

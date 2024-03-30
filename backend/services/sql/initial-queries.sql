@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS `common_services` (
 -- Employee tables 
 CREATE TABLE IF NOT EXISTS `employee` (
   `employee_id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_hash` varchar(255) NOT NULL,
   `employee_email` varchar(255) NOT NULL,
   `active_employee` int(11) NOT NULL,
   `added_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -60,8 +61,17 @@ CREATE TABLE IF NOT EXISTS `employee` (
   UNIQUE (employee_email)
 ) ENGINE=InnoDB;
 
+CREATE TABLE IF NOT EXISTS `employee_hash_id` (
+  `employee_hashid` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  `employee_hash` varchar(255) NOT NULL,
+  PRIMARY KEY (employee_hashid),
+  FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
+) ENGINE=InnoDB;
+
 CREATE TABLE IF NOT EXISTS `employee_info` (
   `employee_info_id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_hash` varchar(255) NOT NULL,
   `employee_id` int(11) NOT NULL,
   `employee_first_name` varchar(255) NOT NULL,
   `employee_last_name` varchar(255) NOT NULL,
@@ -72,6 +82,7 @@ CREATE TABLE IF NOT EXISTS `employee_info` (
 
 CREATE TABLE IF NOT EXISTS `employee_pass` (
   `employee_pass_id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_hash` varchar(255) NOT NULL,
   `employee_id` int(11) NOT NULL,
   `employee_password_hashed` varchar(255) NOT NULL,
   PRIMARY KEY (employee_pass_id),
@@ -80,6 +91,7 @@ CREATE TABLE IF NOT EXISTS `employee_pass` (
 
 CREATE TABLE IF NOT EXISTS `employee_role` (
   `employee_role_id` int(11) NOT NULL AUTO_INCREMENT,
+  `employee_hash` varchar(255) NOT NULL,
   `employee_id` int(11) NOT NULL,
   `company_role_id` int(11) NOT NULL,
   PRIMARY KEY (employee_role_id),
@@ -139,15 +151,19 @@ INSERT INTO company_roles (company_role_name)
 VALUES ('Employee'), ('Manager'), ('Admin');
 
 -- This is the admin account 
-INSERT INTO employee (employee_email, active_employee, added_date)
-VALUES ('admin@admin.com', 1, CURRENT_TIMESTAMP);
+INSERT INTO employee (employee_email, employee_hash, active_employee, added_date)
+VALUES ('admin@admin.com', '3QJekD4CfiLYWkxMQ8dSJeFm', 1, CURRENT_TIMESTAMP);
 
-INSERT INTO employee_info (employee_id, employee_first_name, employee_last_name, employee_phone)
-VALUES (1, 'Admin', 'Admin', 555-555-5555); 
+-- admin info
+INSERT INTO employee_info (employee_id, employee_hash, employee_first_name, employee_last_name, employee_phone)
+VALUES (1, '3QJekD4CfiLYWkxMQ8dSJeFm', 'Admin', 'Admin', 555-555-5555); 
 
 -- Password is 123456
-INSERT INTO employee_pass (employee_id, employee_password_hashed)
-VALUES (1, '$2b$10$3QJekD4CfiLYWkxMQ8dSJeFmYw32bHw43AZHKrNmyJIPuMWr0Fbqa');  
+INSERT INTO employee_pass (employee_id, employee_hash, employee_password_hashed)
+VALUES (1, '3QJekD4CfiLYWkxMQ8dSJeFm', '$2b$10$3QJekD4CfiLYWkxMQ8dSJeFmYw32bHw43AZHKrNmyJIPuMWr0Fbqa');
 
-INSERT INTO employee_role (employee_id, company_role_id)
-VALUES (1, 3); 
+INSERT INTO employee_role (employee_id, employee_hash, company_role_id)
+VALUES (1, '3QJekD4CfiLYWkxMQ8dSJeFm', 3); 
+
+INSERT INTO employee_hash_id (employee_id, employee_hash)
+VALUES (1, '3QJekD4CfiLYWkxMQ8dSJeFm');

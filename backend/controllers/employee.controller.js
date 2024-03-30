@@ -5,6 +5,7 @@ const {
   getAllEmployees,
   updateEmploye,
   deleteEmploye,
+  getSingleEmploye,
 } = require("../services/employee.service");
 
 // create Employee controller
@@ -53,8 +54,6 @@ async function getAllEmployeees(req, res, next) {
     // call the getAllEmployees methosd from the emplyees service
     const employees = await getAllEmployees();
 
-    // console.log(employees);
-
     if (!employees) {
       res.status(400).json({
         error: "Failed to get all employee!",
@@ -71,6 +70,32 @@ async function getAllEmployeees(req, res, next) {
       error: "Something went wrong!",
     });
   }
+}
+
+// get single employee data controller
+async function getSingleEmployee(req, res, next) {
+  console.log(req.body);
+  const { employee_hash } = req.body;
+  // try {
+  //   const singleEmployee = await getSingleEmploye(employee_hash);
+  //   // console.log(singleEmployee);
+
+  //   if (!singleEmployee) {
+  //     res.status(400).json({
+  //       error: "Failed to get employee!",
+  //     });
+  //   } else {
+  //     res.status(200).json({
+  //       status: "Employee retrieved successfully! ",
+  //       singleEmployee: singleEmployee,
+  //     });
+  //   }
+  // } catch (error) {
+  //   console.log(error);
+  //   res.status(400).json({
+  //     error: "Something went wrong!",
+  //   });
+  // }
 }
 
 // update Employee controller
@@ -138,4 +163,5 @@ module.exports = {
   getAllEmployeees,
   updateEmployee,
   deleteEmployee,
+  getSingleEmployee,
 };

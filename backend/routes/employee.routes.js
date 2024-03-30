@@ -17,15 +17,22 @@ const employeeController = require("../controllers/employee.controller");
 // create a route to handle the employee request in post
 router.post(
   "/api/employee",
-  [verifyToken, isAdmin],
+  // [verifyToken, isAdmin],
   employeeController.createEmployee
 );
 
-// create a route to handle the employee request in get
+// create a route to handle the get all employee request in get
 router.get(
   "/api/employees",
   [verifyToken, isAdmin_Manager],
   employeeController.getAllEmployeees
+);
+
+// create a route to handle the get all employee request in get
+router.get(
+  "/api/employee/single",
+  // [verifyToken, isAdmin],
+  employeeController.getSingleEmployee
 );
 
 // create a route to handle the employee request in put
@@ -38,7 +45,7 @@ router.put(
 // create a route to handle the employee request in delete
 router.delete(
   "/api/employee/delete",
-  // [verifyToken, isAdmin],
+  [verifyToken, isAdmin],
   employeeController.deleteEmployee
 );
 

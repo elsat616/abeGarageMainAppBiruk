@@ -58,7 +58,7 @@ async function isAdmin_Manager(req, res, next) {
   // console.log(req.employee_email)
 
   const employee = await employeeService.getEmployeeByEmail(employee_email);
-  console.log(employee[0]);
+  // console.log(employee[0]);
 
   if (employee[0].company_role_id === 3) {
     next();
@@ -79,7 +79,7 @@ async function isAdmin_Manager_Employee(req, res, next) {
   console.log(req.employee_email);
 
   const employee = await employeeService.getEmployeeByEmail(employee_email);
-  console.log(employee);
+  // console.log(employee);
 
   if (employee[0].company_role_id === 3) {
     next();

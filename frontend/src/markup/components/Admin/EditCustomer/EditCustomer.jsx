@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { BeatLoader } from "react-spinners";
 
 // import employee service
-import employeeService from "../../../../services/employee.services";
+import customerService from "../../../../services/customer.services";
 
 // import the useAuth hook
 import { useAuth } from "../../../../Context/AuthContext";
@@ -10,18 +10,16 @@ import { useAuth } from "../../../../Context/AuthContext";
 // import react router dom
 import { useParams, useNavigate } from "react-router-dom";
 
-function EditEmployee() {
+function EditCustomer() {
   const navigate = useNavigate();
-  const [employee_first_name, setFirstName] = useState("");
-  const [employee_last_name, setLastName] = useState("");
-  const [employee_phone, setPhoneNumber] = useState("");
-  const [company_role_id, setCompany_role_id] = useState(1);
-  const [active_employee, setActiveEmployee] = useState("");
-  const [employee1, setEmployee1] = useState("");
+  const [customer_first_name, setFirstName] = useState("");
+  const [customer_last_name, setLastName] = useState("");
+  const [customer_phone, setPhoneNumber] = useState("");
+  const [active_customer, setActiveCustomer] = useState("");
+  const [customer1, setCustomer1] = useState("");
 
-  // console.log(active_employee);
-
-  const { employee_hash } = useParams();
+  const { customer_hash } = useParams();
+  // console.log(customer_hash);
 
   // console.log(employee_first_name);
   // console.log(employee_last_name);
@@ -32,7 +30,6 @@ function EditEmployee() {
   const firstNameDom = useRef();
   const lastNameDom = useRef();
   const phoneNumberDom = useRef();
-  const companyRoleIdDom = useRef();
   const checkboxDOM = useRef();
 
   // console.log(checkboxDOM.current)
@@ -60,14 +57,9 @@ function EditEmployee() {
     setPhoneNumber(phoneNumberDom.current.value);
   }
 
-  // company role id value tracker
-  function companyRoleIdTracker() {
-    setCompany_role_id(companyRoleIdDom.current.value);
-  }
-
   // active employee value tracker
-  function activeEmployeeTracker() {
-    setActiveEmployee(checkboxDOM.current.checked);
+  function activeCustomerTracker() {
+    setActiveCustomer(checkboxDOM.current.checked);
   }
 
   // fetch employee data using useEffect
@@ -75,12 +67,12 @@ function EditEmployee() {
     const fetchData = async () => {
       // console.log(formData);
       try {
-        const data = await employeeService?.singleEmployee(
-          employee_hash,
+        const data = await customerService?.singleCustomer(
+          customer_hash,
           loggedInEmployeeToken
         );
-        // console.log(data.data.singleEmployee[0]);
-        // console.log(data.data.singleEmployee[0].company_role_id);
+
+        console.log(data.data.singleCustomer[0]);
 
         if (data?.statusText !== "OK") {
           // set apiError to true
@@ -94,49 +86,46 @@ function EditEmployee() {
             setApiErrorMessage("Please try again laterrrr");
           }
         }
-        setFirstName(data.data.singleEmployee[0].employee_first_name);
-        setLastName(data.data.singleEmployee[0].employee_last_name);
-        setPhoneNumber(data.data.singleEmployee[0].employee_phone);
-        setCompany_role_id(data.data.singleEmployee[0].company_role_id);
-        setEmployee1(data.data.singleEmployee[0]);
+
+        setFirstName(data.data.singleCustomer[0].customer_first_name);
+        setLastName(data.data.singleCustomer[0].customer_last_name);
+        setPhoneNumber(data.data.singleCustomer[0].customer_phone_number);
+        setCustomer1(data.data.singleCustomer[0]);
         checkboxDOM.current.checked =
-          data.data.singleEmployee[0].active_employee;
-        setActiveEmployee(checkboxDOM.current.checked);
-        // set employees data
-        // setEmployees(data?.data?.employees);
+          data.data.singleCustomer[0].active_customer_status;
+        setActiveCustomer(checkboxDOM.current.checked);
 
         // console.log(checkboxDOM.current.checked);
       } catch (error) {
-        // console.log(error);
+        console.log(error);
       }
     };
-    // console.log(employee_first_name);
+
     fetchData();
   }, []);
 
-  // console.log(employee_first_name)
+  // submit handler
   async function handleSubmit(e) {
     // prevent the default behavior of the form submission
     e.preventDefault();
 
     // prepare the data for form submission
     const FormData = {
-      employee_first_name,
-      employee_last_name,
-      employee_phone,
-      company_role_id,
-      employee_hash,
-      active_employee,
+      customer_first_name,
+      customer_last_name,
+      customer_phone,
+      active_customer,
+      customer_hash,
     };
 
     try {
-      const data = await employeeService.updateEmployee(
+      const data = await customerService.updateCustomer(
         FormData,
         loggedInEmployeeToken
       );
 
       // alert("grooddddddddddddddddddddddd");
-      navigate("/admin/employees");
+      navigate("/admin/customers");
     } catch (error) {
       console.log(error);
     }
@@ -147,7 +136,7 @@ function EditEmployee() {
       <section className="contact-section">
         <div className="auto-container">
           <div className="contact-title">
-            <h2>Edit: {employee1.employee_email} </h2>
+            <h2>Edit: {customer1.customer_email} </h2>
           </div>
           <div className="row clearfix">
             <div className="form-column col-lg-7">
@@ -164,7 +153,7 @@ function EditEmployee() {
                           name="employee_first_name"
                           placeholder="Employee first name"
                           ref={firstNameDom}
-                          value={employee_first_name}
+                          value={customer_first_name}
                           onChange={firstNameTracker}
                           required
                         />
@@ -183,7 +172,7 @@ function EditEmployee() {
                           placeholder="Employee last name"
                           required
                           ref={lastNameDom}
-                          value={employee_last_name}
+                          value={customer_last_name}
                           onChange={lastNameTracker}
                         />
                         {"lastNameRequired" && (
@@ -201,7 +190,7 @@ function EditEmployee() {
                           placeholder="Employee phone (555-555-5555)"
                           ref={phoneNumberDom}
                           required
-                          value={employee_phone}
+                          value={customer_phone}
                           onChange={phoneNumberTracker}
                         />
                         {"phoneNumberRequired" && (
@@ -211,28 +200,12 @@ function EditEmployee() {
                         )}
                       </div>
 
-                      {/* Employee Role */}
-                      <div className="form-group col-md-12">
-                        <select
-                          name="employee_role"
-                          className="custom-select-box"
-                          ref={companyRoleIdDom}
-                          value={company_role_id}
-                          onChange={companyRoleIdTracker}
-                          required
-                        >
-                          <option value="1">Employee</option>
-                          <option value="2">Manager</option>
-                          <option value="3">Admin</option>
-                        </select>
-                      </div>
-
                       <div className="form-group col-md-12 form-contro">
-                        <h5 htmlFor="completed">Active Employee</h5>
+                        <h5 htmlFor="completed">Active Customer</h5>
 
                         <input
-                          value={active_employee}
-                          onChange={activeEmployeeTracker}
+                          value={active_customer}
+                          onChange={activeCustomerTracker}
                           ref={checkboxDOM}
                           type="checkbox"
                           name="completed"
@@ -252,7 +225,7 @@ function EditEmployee() {
                             {!"spin" ? (
                               <BeatLoader color="white" size={8} />
                             ) : (
-                              "Update Employee"
+                              "Update Customer"
                             )}
                           </span>
                         </button>
@@ -285,4 +258,4 @@ function EditEmployee() {
   );
 }
 
-export default EditEmployee;
+export default EditCustomer;

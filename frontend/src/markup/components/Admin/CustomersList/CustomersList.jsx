@@ -7,22 +7,24 @@ import { Table, Button } from "react-bootstrap";
 
 // import react icons
 import { FaEdit } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
+import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 
 // import the auth hook
 import { useAuth } from "../../../../Context/AuthContext";
 
 // import the employee service to use the get employees function
-import employeeService from "../../../../services/employee.services";
+import cutomerService from "../../../../services/customer.services";
 
 // import the date-fns library
 import { format } from "date-fns";
+import customerService from "../../../../services/customer.services";
 
 ////////////////////////////////////////
-function EmployeesList() {
+function CustomersList() {
   //  employees state to store the emplooyes data
-  const [employees, setEmployees] = useState([]);
-  const [ddd, setddd] = useState("");
+  const [customers, setCustomers] = useState([]);
+
+  // console.log(customers);
 
   // console.log(employees);
   // const { id } = useParams();
@@ -51,8 +53,8 @@ function EmployeesList() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await employeeService?.getAllEmployees(token);
-        // console.log(data.status);
+        const data = await customerService?.getAllCustomers(token);
+        // console.log(data);
 
         if (data?.statusText !== "OK") {
           // set apiError to true
@@ -67,10 +69,10 @@ function EmployeesList() {
           }
         }
 
-        // set employees data
-        setEmployees(data?.data?.employees);
+        // // set customers data
+        setCustomers(data?.data?.customers);
 
-        // console.log(data?.data.employees);
+        // console.log(data?.data?.customers);
       } catch (error) {
         // console.log(error);
       }
@@ -78,18 +80,12 @@ function EmployeesList() {
     fetchData();
   }, []);
 
-  // handle Delete
-  function handleDelete(id) {
-    setddd(id);
-    console.log(id);
-    alert("kkk");
-    setTimeout(() => {
-      navigate(`/admin/employees`);
-    }, 2000);
+  function handleEdit(id) {
+    navigate(`/admin/customer-update/${id}`);
   }
 
-  function handleEdit(id) {
-    navigate(`/admin/employee-update/${id}`);
+  function handleProfile(id) {
+    navigate(`/admin/customer-profile/${id}`);
   }
 
   return (
@@ -99,7 +95,7 @@ function EmployeesList() {
           <div className="auto-container">
             <div className="contact-title">
               <h2>
-                {apiErrorMessage}
+                {"apiErrorMessage"}
                 <span style={{ color: "red" }}> ___</span>
               </h2>
             </div>
@@ -109,53 +105,56 @@ function EmployeesList() {
         <section className="contact-section">
           <div className="auto-container">
             <div className="contact-title">
-              <h2>Employees</h2>
+              <h2>Customers</h2>
             </div>
             <Table striped bordered hover>
               <thead>
                 <tr>
-                  <th>Active</th>
+                  <th>Id</th>
                   <th>First Name</th>
                   <th>Last Name</th>
                   <th>Email</th>
                   <th>Phone</th>
                   <th>Added Data</th>
-                  <th>Role</th>
+                  <th>Active</th>
                   <th>Edit</th>
                 </tr>
               </thead>
               <tbody>
-                {employees.map((employe) => (
+                {customers.map((customer) => (
                   <tr
                     className={
-                      !employe.active_employee ? `${"inactive"}` : `${"active"}`
+                      !customer.active_customer_status
+                        ? `${"inactive"}`
+                        : `${"active"}`
                     }
-                    key={employe.employee_id}
-                    onClick={() => handleEdit(employe.employee_hash)}
+                    key={customer.customer_id}
                   >
-                    <td>{employe.active_employee ? "Yes" : "No"}</td>
-                    <td>{employe.employee_first_name}</td>
-                    <td>{employe.employee_last_name}</td>
-                    <td>{employe.employee_email}</td>
-                    <td>{employe.employee_phone}</td>
+                    <td>{customer.customer_id}</td>
+                    <td>{customer.customer_first_name}</td>
+                    <td>{customer.customer_last_name}</td>
+                    <td>{customer.customer_email}</td>
+                    <td>{customer.customer_phone_number}</td>
                     <td>
                       {format(
-                        new Date(employe.added_date),
+                        new Date(customer.customer_added_date),
                         "MM - dd - yyyy | kk:mm"
                       )}
                     </td>
-                    <td>{employe.company_role_name}</td>
+                    <td>{customer.active_customer_status ? "Yes" : "No"}</td>
                     <td className="edit">
-                      <span className="hover1">
+                      <span
+                        onClick={() => handleEdit(customer.customer_hash)}
+                        className="hover1"
+                      >
                         <FaEdit color="#081336" />
                       </span>
 
-                      {/* <span
-                        className="hover"
-                        onClick={() => handleDelete(employe.employee_id)}
+                      <span
+                        onClick={() => handleProfile(customer.customer_hash)}
                       >
-                        <MdDelete color="#DC3545" />
-                      </span> */}
+                        <FaArrowUpRightFromSquare color="#081336" />
+                      </span>
                     </td>
                   </tr>
                 ))}
@@ -168,4 +167,4 @@ function EmployeesList() {
   );
 }
 
-export default EmployeesList;
+export default CustomersList;

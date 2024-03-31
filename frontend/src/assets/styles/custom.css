@@ -18,7 +18,8 @@ textarea::placeholder {
 
 /* Header */
 .main-header {
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 2px 5px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 2px 5px -2px,
+    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 }
 
 /* Admin pages */
@@ -329,4 +330,48 @@ input:disabled {
 .edit {
   display: flex;
   gap: 25%;
+}
+
+.form-contro {
+  display: flex;
+  width: 50%;
+  gap: 10px;
+  /* display: grid; */
+  /* grid-template-columns: 150px 1fr; */
+  /* align-items: center; */
+  /* justify-items: start; */
+  /* gap: 0 1rem; */
+  /* margin-bottom: 0.75rem; */
+}
+
+.inactive {
+  color: rgba(168, 154, 154, 0.219) !important;
+  font-weight: 100 !important;
+}
+
+.active {
+  font-weight: 600 !important;
+  font-size: large !important;
+  cursor: pointer;
+}
+
+.noData {
+  background-color: #08194a;
+  padding: 10px 70px;
+  align-items: center !important;
+  display: flex;
+  text-align: center !important;
+  margin: 0 auto;
+}
+
+.noData h2 {
+  font-weight: 900;
+  font-size: 50px;
+  align-items: center;
+  color: white;
+}
+
+.table {
+  width: 95%;
+  margin: 0 auto;
 }

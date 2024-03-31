@@ -9,9 +9,9 @@ import LoginForm from "../../components/LoginForm/LoginForm";
 // import the admin menu component
 import AdminMenu from "../../components/Admin/AdminMenu/AdminMenu";
 
-import CustomersList from "../../components/Admin/CustomersList/CustomersList";
+import CustomerProfile from "../../components/Admin/CustomerProfile/CustomerProfile";
 
-function Employees() {
+function CustomerProfilee() {
   const { isLogged, isAdmin_manager, isAdmin } = useAuth();
 
   // console.log(useAuth())
@@ -26,7 +26,7 @@ function Employees() {
                 <AdminMenu />
               </div>
               <div className="col-md-9 admin-right-side">
-                <CustomersList />
+                <CustomerProfile />
               </div>
             </div>
           </div>
@@ -50,4 +50,4 @@ function Employees() {
   }
 }
 
-export default Employees;
+export default CustomerProfilee;

@@ -31,7 +31,7 @@ async function updateEmployee(formData, loggedInEmployeeToken) {
 
   const data = await axios.put("/api/employee/update", formData, { headers });
 
-  console.log(data);
+  // console.log(data);
 
   return data;
 }
@@ -41,8 +41,8 @@ async function singleEmployee(formData, loggedInEmployeeToken) {
   const headers = {
     "x-access-token": loggedInEmployeeToken,
   };
-
-  const data = await axios.get("/api/employee/single", formData, { headers });
+  // console.log(formData);
+  const data = await axios.get(`/api/employee/single/${formData}`, { headers });
 
   // console.log(data);
 

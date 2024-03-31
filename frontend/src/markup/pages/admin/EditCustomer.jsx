@@ -9,15 +9,15 @@ import LoginForm from "../../components/LoginForm/LoginForm";
 // import the admin menu component
 import AdminMenu from "../../components/Admin/AdminMenu/AdminMenu";
 
-import CustomersList from "../../components/Admin/CustomersList/CustomersList";
+import EditCustomer from "../../components/Admin/EditCustomer/EditCustomer";
 
-function Employees() {
-  const { isLogged, isAdmin_manager, isAdmin } = useAuth();
+function EditEmployee() {
+  const { isLogged, isAdmin } = useAuth();
 
   // console.log(useAuth())
 
   if (isLogged) {
-    if (isAdmin_manager || isAdmin) {
+    if (isAdmin) {
       return (
         <div>
           <div className="container-fluid admin-pages">
@@ -26,7 +26,7 @@ function Employees() {
                 <AdminMenu />
               </div>
               <div className="col-md-9 admin-right-side">
-                <CustomersList />
+                <EditCustomer />
               </div>
             </div>
           </div>
@@ -50,4 +50,4 @@ function Employees() {
   }
 }
 
-export default Employees;
+export default EditEmployee;

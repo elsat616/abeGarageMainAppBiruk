@@ -56,7 +56,7 @@ async function getAllEmployeees(req, res, next) {
 
     if (!employees) {
       res.status(400).json({
-        error: "Failed to get all employee!",
+        error: "Failed to get all employees!",
       });
     } else {
       res.status(200).json({
@@ -74,28 +74,28 @@ async function getAllEmployeees(req, res, next) {
 
 // get single employee data controller
 async function getSingleEmployee(req, res, next) {
-  console.log(req.body);
-  const { employee_hash } = req.body;
-  // try {
-  //   const singleEmployee = await getSingleEmploye(employee_hash);
-  //   // console.log(singleEmployee);
+  const employee_hash = req.params.hash;
+  console.log(employee_hash)
+  try {
+    const singleEmployee = await getSingleEmploye(employee_hash);
+    // console.log(singleEmployee);
 
-  //   if (!singleEmployee) {
-  //     res.status(400).json({
-  //       error: "Failed to get employee!",
-  //     });
-  //   } else {
-  //     res.status(200).json({
-  //       status: "Employee retrieved successfully! ",
-  //       singleEmployee: singleEmployee,
-  //     });
-  //   }
-  // } catch (error) {
-  //   console.log(error);
-  //   res.status(400).json({
-  //     error: "Something went wrong!",
-  //   });
-  // }
+    if (!singleEmployee) {
+      res.status(400).json({
+        error: "Failed to get employee!",
+      });
+    } else {
+      res.status(200).json({
+        status: "Employee retrieved successfully! ",
+        singleEmployee: singleEmployee,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: "Something went wrong!",
+    });
+  }
 }
 
 // update Employee controller

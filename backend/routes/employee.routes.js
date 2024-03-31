@@ -9,6 +9,7 @@ const {
   verifyToken,
   isAdmin,
   isAdmin_Manager,
+  isAdmin_Manager_Employee
 } = require("../middlewares/auth.middleware");
 
 // import the employee controller
@@ -17,7 +18,7 @@ const employeeController = require("../controllers/employee.controller");
 // create a route to handle the employee request in post
 router.post(
   "/api/employee",
-  // [verifyToken, isAdmin],
+  [verifyToken, isAdmin],
   employeeController.createEmployee
 );
 
@@ -28,10 +29,10 @@ router.get(
   employeeController.getAllEmployeees
 );
 
-// create a route to handle the get all employee request in get
+// create a route to handle the get single employee request in get
 router.get(
-  "/api/employee/single",
-  // [verifyToken, isAdmin],
+  "/api/employee/single/:hash",
+  [verifyToken, isAdmin_Manager],
   employeeController.getSingleEmployee
 );
 
@@ -45,7 +46,7 @@ router.put(
 // create a route to handle the employee request in delete
 router.delete(
   "/api/employee/delete",
-  [verifyToken, isAdmin],
+  // [verifyToken, isAdmin],
   employeeController.deleteEmployee
 );
 

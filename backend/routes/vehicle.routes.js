@@ -22,11 +22,18 @@ router.post(
   vehicleController.addVehicle
 );
 
-// create a route to handle the employee request in post
+// create a route to handle the employee request in get
 router.get(
-  "/api/vehicle/single",
+  "/api/vehicle/customer",
   // [verifyToken, isAdmin],
   vehicleController.getVehicleById
+);
+
+// create a route to handle the employee request in get
+router.get(
+  "/api/vehicle/single/:customer_hash/:vehicle_id",
+  // [verifyToken, isAdmin],
+  vehicleController.getSingleVehicle
 );
 
 // export the router

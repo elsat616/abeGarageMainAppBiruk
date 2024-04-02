@@ -32,14 +32,14 @@ router.get(
 // create a route to handle the customer request in put
 router.put(
   "/api/service/update",
-//   [verifyToken, isAdmin],
+  //   [verifyToken, isAdmin],
   serviceController.updateService
 );
 
 // create a route to handle the get single service request in get
 router.get(
-  "/api/single/single/:hash",
-//   [verifyToken, isAdmin_Manager],
+  "/api/service/single/:hash",
+  //   [verifyToken, isAdmin_Manager],
   serviceController.getsingleService
 );
 

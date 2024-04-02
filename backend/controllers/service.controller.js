@@ -1,3 +1,4 @@
+const e = require("express");
 const {
   addServicee,
   getAllServicee,
@@ -43,21 +44,68 @@ async function getAllService(req, res, next) {
     }
   } catch (error) {
     console.log(error);
+    res.status(400).json({
+      error: "Something went wrong!",
+    });
   }
 }
 
 async function updateService(req, res, next) {
+  // console.log(req.body)
   try {
     const updateService = await updateServicee(req.body);
 
-        const rows = updateService.rows1.affectedRows;
+    // console.log(updateService.affectedRows)
 
-        console.log(rows)
-  } catch (error) {console.log(error)}
+    const rows = updateService.affectedRows;
+
+    if (!updateService) {
+      return res.status(400).json({
+        error: "Failed to update the service!",
+      });
+    } else if (rows === 1) {
+      return res.status(200).json({
+        status: "Service Successful Updated!",
+      });
+    } else {
+      return res.status(400).json({
+        status: "Service Update Incomplete!",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: "Something went wrong!",
+    });
+  }
 }
 
-async function getsingleService(){
+async function getsingleService(req, res, next) {
+  const service_hash = req.params.hash;
 
+  // console.log(service_hash)
+
+  try {
+    const singleService = await getsingleServicee(service_hash);
+
+    // console.log(singleService[0].service_id);
+
+    if (!singleService[0]?.service_id) {
+      res.status(400).json({
+        error: "Failed to get service!",
+      });
+    } else {
+      res.status(200).json({
+        status: "Service retrieved successfully! ",
+        singleService: singleService,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: "Something went wrong!",
+    });
+  }
 }
 
-module.exports = { addService, getAllService, updateService, getsingleServicee };
+module.exports = { addService, getAllService, updateService, getsingleService };

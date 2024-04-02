@@ -48,8 +48,25 @@ async function updateServicee(service) {
     service.service_description,
     service.service_hash,
   ]);
+
+  return rows;
 }
 
+async function getsingleServicee(service) {
+  // console.log(service)
 
+  const query = "SELECT * FROM common_services WHERE service_hash = ?";
 
-module.exports = { addServicee, getAllServicee, updateServicee };
+  const rows = await connection.query(query, [service]);
+
+  // console.log(rows)
+
+  return rows;
+}
+
+module.exports = {
+  addServicee,
+  getAllServicee,
+  updateServicee,
+  getsingleServicee,
+};

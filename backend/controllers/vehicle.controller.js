@@ -1,4 +1,8 @@
-const { addVehiclee, getVehicleeById } = require("../services/vehicle.service");
+const {
+  addVehiclee,
+  getVehicleeById,
+  getSingleVehiclee,
+} = require("../services/vehicle.service");
 
 async function addVehicle(req, res, next) {
   //   console.log(req.body);
@@ -45,7 +49,7 @@ async function getVehicleById(req, res, next) {
         customerVehicle: customerVehicle,
       });
     }
-  } catch (error){
+  } catch (error) {
     // console.log("kkk");
     console.log(error);
     res.status(400).json({
@@ -54,4 +58,28 @@ async function getVehicleById(req, res, next) {
   }
 }
 
-module.exports = { addVehicle, getVehicleById };
+async function getSingleVehicle(req, res, next) {
+  try {
+    const SingleVehicle = await getSingleVehiclee(req.params);
+
+    // console.log(SingleVehicle)
+
+    if (SingleVehicle.length < 1) {
+      return res.status(400).json({
+        error: "No Vehicle Found!",
+      });
+    } else {
+      return res.status(200).json({
+        status: "Vehicle found!!",
+        SingleVehicle: SingleVehicle,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: "Something went wrong!",
+    });
+  }
+}
+
+module.exports = { addVehicle, getVehicleById, getSingleVehicle };

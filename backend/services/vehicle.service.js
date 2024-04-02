@@ -66,4 +66,31 @@ async function getVehicleeById(hash) {
   }
 }
 
-module.exports = { addVehiclee, getVehicleeById };
+// get the Customer single Vehiclee 
+async function getSingleVehiclee(single) {
+  // console.log(single.customer_hash);
+  // to get the customer Id
+  const query = "SELECT * FROM customer_identifier WHERE customer_hash = ?";
+
+  const rows = await connection.query(query, [single.customer_hash]);
+
+  // console.log(rows);
+
+  const customer_id = rows[0].customer_id;
+
+  // console.log(customer_id);
+
+  // get the customer vehicle by its id
+  const query1 =
+    "SELECT * FROM customer_vehicle_info WHERE customer_id =? AND vehicle_id = ?";
+
+  const rows1 = await connection.query(query1, [
+    customer_id,
+    single.vehicle_id,
+  ]);
+
+  // console.log(rows1);
+  return rows1;
+}
+
+module.exports = { addVehiclee, getVehicleeById, getSingleVehiclee };

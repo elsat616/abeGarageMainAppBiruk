@@ -19,6 +19,9 @@ const vehicleRouter = require("./vehicle.routes");
 // import the service routes
 const serviceRouter = require("./service.routes");
 
+// import the order routes
+const orderRouter = require("./order.routes");
+
 // import the login routes
 const logInRouter = require("./login.routes");
 
@@ -36,6 +39,9 @@ router.use(vehicleRouter);
 
 // Add the service router to the main router
 router.use(serviceRouter);
+
+// Add the order router to the main router
+router.use(orderRouter);
 
 // Add the login router to the main router
 router.use(logInRouter);

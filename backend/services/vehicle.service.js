@@ -1,6 +1,8 @@
 // import the query function from the db.config.js file
+const { query } = require("express");
 const connection = require("../config/db.config");
 
+// add customer vehicle information
 async function addVehiclee(vehicle) {
   const customer_hash = vehicle.customer_hash;
 
@@ -37,4 +39,31 @@ async function addVehiclee(vehicle) {
   return rows1;
 }
 
-module.exports = { addVehiclee };
+// get Customer Vehiclee by customer id
+async function getVehicleeById(hash) {
+  try {
+    // console.log(customer_hash)
+
+    const customer_hash = hash.query;
+
+    // to get the customer Id
+    const query = "SELECT * FROM customer_identifier WHERE customer_hash = ?";
+
+    const rows = await connection.query(query, [customer_hash]);
+
+    // console.log(rows[0].customer_id);
+
+    const customer_id = rows[0].customer_id;
+
+    // get the customer vehicle by its id
+    const query1 = "SELECT * FROM customer_vehicle_info WHERE customer_id =?";
+
+    const rows1 = await connection.query(query1, [customer_id]);
+
+    return rows1;
+  } catch (error) {
+    return;
+  }
+}
+
+module.exports = { addVehiclee, getVehicleeById };

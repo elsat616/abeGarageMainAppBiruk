@@ -18,8 +18,15 @@ const vehicleController = require("../controllers/vehicle.controller");
 // create a route to handle the employee request in post
 router.post(
   "/api/vehicle",
-  //   [verifyToken, isAdmin],
+  [verifyToken, isAdmin],
   vehicleController.addVehicle
+);
+
+// create a route to handle the employee request in post
+router.get(
+  "/api/vehicle/single",
+  // [verifyToken, isAdmin],
+  vehicleController.getVehicleById
 );
 
 // export the router

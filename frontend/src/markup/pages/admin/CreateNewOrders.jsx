@@ -9,15 +9,15 @@ import LoginForm from "../../components/LoginForm/LoginForm";
 // import the admin menu component
 import AdminMenu from "../../components/Admin/AdminMenu/AdminMenu";
 
-import OrdersList from "../../components/Admin/OrdersList/OrdersList";
+import CreateNewOrder from "../../components/Admin/CreateNewOrder/CreateNewOrder";
 
-function Orders() {
-  const { isLogged, isAdmin_manager, isAdmin } = useAuth();
+function CreateNewOrders() {
+  const { isLogged, isAdmin } = useAuth();
 
   // console.log(useAuth())
 
   if (isLogged) {
-    if (isAdmin_manager || isAdmin) {
+    if (isAdmin) {
       return (
         <div>
           <div className="container-fluid admin-pages">
@@ -26,7 +26,7 @@ function Orders() {
                 <AdminMenu />
               </div>
               <div className="col-md-9 admin-right-side">
-                <OrdersList />
+                <CreateNewOrder />
               </div>
             </div>
           </div>
@@ -50,4 +50,4 @@ function Orders() {
   }
 }
 
-export default Orders;
+export default CreateNewOrders;

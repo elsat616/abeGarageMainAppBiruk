@@ -389,3 +389,7 @@ input:disabled {
   font-weight: 900;
   font-size: 2vw;
 }
+
+.Orders{
+  padding-left: 35px;
+}

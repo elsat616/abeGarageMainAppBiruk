@@ -198,6 +198,10 @@ function CustomerProfile() {
     }
   }
 
+  function handleAdd(id) {
+    navigate(`/admin/order/add-new-order/${id}`);
+  }
+
   return (
     <>
       <section className="contact-section">
@@ -205,12 +209,10 @@ function CustomerProfile() {
           {/* Customer Info */}
           <div
             className=" ml-5 pb-4  d-flex order-danger "
-            style={{ borderLeft: "2px solid red" }}
-          >
+            style={{ borderLeft: "2px solid red" }}>
             <div
               className="ml-n5 bg-danger text-center d-flex align-items-center justify-content-center rounded-circle text-white font-weight-bolder"
-              style={{ width: "90px", height: "90px" }}
-            >
+              style={{ width: "90px", height: "90px" }}>
               Info
             </div>
             <div className=" ml-4 p-3 flex-grow-1">
@@ -252,8 +254,7 @@ function CustomerProfile() {
                 </span>
                 <span>
                   <Link
-                    to={`/admin/customer-update/${customer1.customer_hash}`}
-                  >
+                    to={`/admin/customer-update/${customer1.customer_hash}`}>
                     <FaEdit color="#081336" />
                   </Link>
                 </span>
@@ -265,12 +266,10 @@ function CustomerProfile() {
           <div className="d-flex">
             <div
               className=" pb-5 ml-5 d-flex "
-              style={{ borderLeft: "2px solid red" }}
-            >
+              style={{ borderLeft: "2px solid red" }}>
               <div
                 className="ml-n5 bg-danger text-center d-flex align-items-center justify-content-center rounded-circle text-white font-weight-bolder"
-                style={{ width: "90px", height: "90px" }}
-              >
+                style={{ width: "90px", height: "90px" }}>
                 Cars
               </div>
             </div>
@@ -326,8 +325,7 @@ function CustomerProfile() {
                   <div
                     onClick={Show}
                     className=" rounded-circle d-flex justify-content-center align-items-center "
-                    style={{ height: "25px", width: "25px" }}
-                  >
+                    style={{ height: "25px", width: "25px" }}>
                     <span>
                       {showHide ? (
                         <GiCrossedBones size={40} color="#C91236" />
@@ -467,8 +465,7 @@ function CustomerProfile() {
                               // onClick={spinner}
                               className="theme-btn btn-style-one"
                               type="submit"
-                              data-loading-text="Please wait..."
-                            >
+                              data-loading-text="Please wait...">
                               <span>
                                 {!"spin" ? (
                                   <BeatLoader color="white" size={8} />
@@ -486,8 +483,7 @@ function CustomerProfile() {
                                   fontWeight: "600",
                                   padding: "25px",
                                 }}
-                                role="alert"
-                              >
+                                role="alert">
                                 {/* {serverMsg} */}
                               </div>
                             )}
@@ -507,12 +503,10 @@ function CustomerProfile() {
           <div className=" d-flex">
             <div
               className="pt-4 d-flex ml-5  "
-              style={{ borderLeft: "2px solid red" }}
-            >
+              style={{ borderLeft: "2px solid red" }}>
               <div
                 className=" ml-n5 bg-danger text-center d-flex align-items-center justify-content-center rounded-circle text-white font-weight-bolder"
-                style={{ width: "90px", height: "90px" }}
-              >
+                style={{ width: "90px", height: "90px" }}>
                 Orders
               </div>
             </div>
@@ -529,12 +523,12 @@ function CustomerProfile() {
                   Bottstrap table
                 </div>
 
-                <Link to="/admin/order/add-new-order">
+                <span onClick={()=>handleAdd(customer1.customer_hash)}>
                   <FaCirclePlus
                     size={40}
                     className="scale-on-hover cursor-pointer text-dark"
                   />
-                </Link>
+                </span>
               </div>
             </div>
           </div>

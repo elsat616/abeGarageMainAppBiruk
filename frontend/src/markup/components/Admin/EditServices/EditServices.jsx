@@ -36,6 +36,8 @@ function ServiceList() {
   // store the error message
   const [apiErrorMessage, setApiErrorMessage] = useState(null);
 
+  const { service_hash } = useParams();
+
   // create a variable to hold the users token
   let loggedInEmployeeToken = "";
   // destructure the auth hook and get the token
@@ -57,10 +59,16 @@ function ServiceList() {
   // fetch data
   async function fetchData() {
     try {
-      const data = await SERVICE.getAllServices(loggedInEmployeeToken);
+      const data = await SERVICE.singleService(
+        service_hash,
+        loggedInEmployeeToken
+      );
 
-      // console.log(data.data.services);
+      console.log(data.data.singleService);
       setServices(data.data.services);
+
+      setServiceName(data.data.singleService[0].service_name);
+      setServiceDescription(data.data.singleService[0].service_description);
 
       // setVehicleError("");
     } catch (error) {
@@ -81,14 +89,13 @@ function ServiceList() {
     const formData = {
       service_name,
       service_description,
+      service_hash,
     };
 
     try {
-      const data = await SERVICE.addService(formData, loggedInEmployeeToken);
+      const data = await SERVICE.updateService(formData, loggedInEmployeeToken);
 
-      // console.log(data.statusText);
-      fetchData();
-
+      navigate("/admin/services");
       setServiceName("");
       setServiceDescription("");
     } catch (error) {
@@ -99,43 +106,8 @@ function ServiceList() {
   return (
     <>
       <section className="contact-section pb-5">
-        <div className=" auto-container ">
-          <div className="contact-title ">
-            <div>
-              <h2>Service We Provide</h2>{" "}
-              <h5 className="text-secondary">
-                Bring to the table win-win survival strategies to ensure
-                proactive domination. At the end of the day, going forward, a
-                new normal that has evolved from generation X is on the runway
-                heading towards a streamlined cloud solution.
-              </h5>
-            </div>
-
-            {services.map((service) => (
-              <>
-                <div class="bg-white my-2 d-flex">
-                  <div class="pt-3 pb-1 px-4 flex-grow-1">
-                    <h5 class="mb-1 font-weight-bold">
-                      {service.service_name}
-                    </h5>
-                    <h6 class=" mb-1 text-secondary">
-                      {service.service_description}
-                    </h6>
-                  </div>
-                  <div class="d-flex align-items-center px-4">
-                    <Link
-                      to={`/admin/services/service-update/${service.service_hash}`}>
-                      <FaEdit color="#081336" />
-                    </Link>
-                  </div>
-                </div>
-              </>
-            ))}
-          </div>
-        </div>
-
         <div className=" bg-white px-5 pt-5 mt-4 contact-title mb-1">
-          <h2>Add a new service</h2>
+          <h2>Update " {service_name} " Service </h2>
           <div className="contact-form">
             <form onSubmit={handleSubmit}>
               <div className="row clearfix">

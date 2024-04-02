@@ -18,6 +18,7 @@ import { useAuth } from "../../../../Context/AuthContext";
 import { useParams, useNavigate } from "react-router-dom";
 
 function NewOrder1() {
+  const navigate = useNavigate();
   // useState
   const [customers, setCustomer] = useState([]);
   const [query, setQuery] = useState("");
@@ -57,12 +58,16 @@ function NewOrder1() {
       setNoData(error.response.data.error);
     }
   }
+
+  function handleAdd(id) {
+    navigate(`/admin/order/add-new-order/${id}`);
+  }
   return (
     <>
       <section className="contact-section">
         <div className="auto-container">
           <div className="contact-title">
-            <h2>Create a New Order</h2>
+            <h2>Create a New Order 1</h2>
           </div>
 
           <div className="contact-form">
@@ -89,15 +94,16 @@ function NewOrder1() {
                               ? `${"inactive"}`
                               : `${"active"}`
                           }
-                          key={customer.customer_id}
-                        >
+                          key={customer.customer_id}>
                           <td>{customer.customer_first_name}</td>
                           <td>{customer.customer_last_name}</td>
                           <td>{customer.customer_email}</td>
                           <td>{customer.customer_phone_number}</td>
 
                           <td className="edit">
-                            <span>
+                            <span
+                              onClick={() => handleAdd(customer.customer_hash)}
+                              className="hover1">
                               <FaHandPointer color="#081336" />
                             </span>
                           </td>
@@ -115,8 +121,7 @@ function NewOrder1() {
                 <div className="form-group col-md-12">
                   <h1
                     // onClick={spinner}
-                    className="theme-btn btn-style-one"
-                  >
+                    className="theme-btn btn-style-one">
                     <span>
                       {!"spin" ? (
                         <BeatLoader color="white" size={8} />
@@ -134,8 +139,7 @@ function NewOrder1() {
                         fontWeight: "600",
                         padding: "25px",
                       }}
-                      role="alert"
-                    >
+                      role="alert">
                       {/* {serverMsg} */}
                     </div>
                   )}

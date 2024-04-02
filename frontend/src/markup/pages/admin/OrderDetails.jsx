@@ -9,9 +9,9 @@ import LoginForm from "../../components/LoginForm/LoginForm";
 // import the admin menu component
 import AdminMenu from "../../components/Admin/AdminMenu/AdminMenu";
 
-import OrdersList from "../../components/Admin/OrdersList/OrdersList";
+import OrderDetail from "../../components/Admin/OrderDetail/OrderDetail";
 
-function Orders() {
+function OrderDetails() {
   const { isLogged, isAdmin_manager, isAdmin } = useAuth();
 
   // console.log(useAuth())
@@ -26,7 +26,7 @@ function Orders() {
                 <AdminMenu />
               </div>
               <div className="col-md-9 admin-right-side">
-                <OrdersList />
+                <OrderDetail />
               </div>
             </div>
           </div>
@@ -50,4 +50,4 @@ function Orders() {
   }
 }
 
-export default Orders;
+export default OrderDetails;

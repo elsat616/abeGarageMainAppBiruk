@@ -13,11 +13,16 @@ import EditEmployee from "./markup/pages/admin/EditEmployee";
 import AddCustomer from "./markup/pages/admin/AddCustomer";
 import Customers from "./markup/pages/admin/Customers";
 import EditCustomer from "./markup/pages/admin/EditCustomer";
-import Orders from "./markup/pages/admin/Orders";
 import Admin from "./markup/pages/admin/Admin";
 import NewOrder from "./markup/pages/admin/NewOrder";
 import CustomerProfilee from "./markup/pages/admin/CustomerProfilee";
 import Services from "./markup/pages/admin/Services";
+import EditService from "./markup/pages/admin/EditService";
+import Orders from "./markup/pages/admin/Orders";
+import EditOrder from "./markup/pages/admin/EditOrders";
+import OrderDetails from "./markup/pages/admin/OrderDetails";
+import AddNewOrders from "./markup/pages/admin/AddNewOrders";
+import CreateNewOrders from "./markup/pages/admin/CreateNewOrders";
 
 // Import the header and footer components
 import Header from "./markup/components/Header/Header";
@@ -34,6 +39,7 @@ import "./assets/styles/custom.css";
 
 // import the PrivateAuthToute component
 import PrivateAuthRoute from "./markup/components/Auth/PrivateAuthRoute";
+import AddNewOrder from "./markup/components/Admin/AddNewOrder/AddNewOrder";
 
 function App() {
   return (
@@ -47,14 +53,7 @@ function App() {
         {/* unauthorized page route */}
         <Route path="/unauthorized" element={<Unauthorized />} />
         {/* Orders page route */}
-        <Route
-          path="/admin/orders"
-          element={
-            <PrivateAuthRoute roles={[1, 2, 3]}>
-              <Orders />
-            </PrivateAuthRoute>
-          }
-        />
+
         {/* Customers page route */}
         <Route
           path="/admin/customers"
@@ -83,8 +82,59 @@ function App() {
         {/* New Order Page Route */}
         <Route path="/admin/services" element={<Services />} />
 
+        {/* Customer Profile Page Route */}
+        <Route
+          path="/admin/services/service-update/:service_hash"
+          element={<EditService />}
+        />
+
         {/* New Order Page Route */}
         <Route path="/admin/order" element={<NewOrder />} />
+
+        <Route
+          path="/admin/orders"
+          element={
+            <PrivateAuthRoute roles={[1, 2, 3]}>
+              <Orders />
+            </PrivateAuthRoute>
+          }
+        />
+
+        <Route
+          path="admin/orders/order-update/:hash"
+          element={
+            <PrivateAuthRoute roles={[1, 2, 3]}>
+              <EditOrder />
+            </PrivateAuthRoute>
+          }
+        />
+
+        <Route
+          path="admin/orders/order-detail/:hash"
+          element={
+            <PrivateAuthRoute roles={[1, 2, 3]}>
+              <OrderDetails />
+            </PrivateAuthRoute>
+          }
+        />
+
+        <Route
+          path="admin/order/add-new-order/:customer_hash"
+          element={
+            <PrivateAuthRoute roles={[1, 2, 3]}>
+              <AddNewOrders />
+            </PrivateAuthRoute>
+          }
+        />
+
+        <Route
+          path="admin/order/add-new-order/select-service/:hash/:vehicle_id"
+          element={
+            <PrivateAuthRoute roles={[1, 2, 3]}>
+              <CreateNewOrders />
+            </PrivateAuthRoute>
+          }
+        />
 
         {/* Employees page route */}
         <Route path="/admin/employees" element={<Employees />} />

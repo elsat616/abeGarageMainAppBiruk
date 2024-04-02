@@ -19,7 +19,7 @@ async function getCustomerVehicle(formData, loggedInEmployeeToken) {
     "x-access-token": loggedInEmployeeToken,
   };
 
-  const data = await axios.get(`/api/vehicle/single?query=${formData}`, {
+  const data = await axios.get(`/api/vehicle/customer?query=${formData}`, {
     headers,
   });
 

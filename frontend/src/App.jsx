@@ -17,6 +17,7 @@ import Orders from "./markup/pages/admin/Orders";
 import Admin from "./markup/pages/admin/Admin";
 import NewOrder from "./markup/pages/admin/NewOrder";
 import CustomerProfilee from "./markup/pages/admin/CustomerProfilee";
+import Services from "./markup/pages/admin/Services";
 
 // Import the header and footer components
 import Header from "./markup/components/Header/Header";
@@ -78,6 +79,9 @@ function App() {
           path="/admin/customer-profile/:customer_hash"
           element={<CustomerProfilee />}
         />
+
+        {/* New Order Page Route */}
+        <Route path="/admin/services" element={<Services />} />
 
         {/* New Order Page Route */}
         <Route path="/admin/order" element={<NewOrder />} />

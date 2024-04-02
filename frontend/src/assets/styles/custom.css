@@ -375,3 +375,17 @@ input:disabled {
   width: 95%;
   margin: 0 auto;
 }
+
+.NoVehicle {
+  /* background-color: #08194a; */
+  width: 30%;
+  margin: 0 auto;
+  padding: 30px 0px;
+}
+
+.NoVehicle h2 {
+  text-align: center;
+  color: #dc3545;
+  font-weight: 900;
+  font-size: 2vw;
+}

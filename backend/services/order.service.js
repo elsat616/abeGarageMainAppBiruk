@@ -48,10 +48,33 @@ async function createOrderr(order) {
     }
 
     // insert the order data in to the order service table
-    const query3 = "INSERT INTO order_services (order_id, service_id";
+    const query3 =
+      "INSERT INTO order_services (order_id, service_id, service_completed) VALUES (?, ?, ?)";
+    let afeectedRows3 = 0;
+    for (let service of order.order_services) {
+      const values = [order_id, service.service_id, 0];
 
-    console.log("to be continue in the order service");
-  } catch (error) {}
+      const rows3 = await connection.query(query3, values);
+      afeectedRows3 = rows3.affectedRows + afeectedRows3;
+    }
+    // console.log(afeectedRows3, "ppppppppppppp");
+
+    if (afeectedRows3 <= 0) {
+      return false;
+    }
+
+    // let rows3 = [];
+
+    // for (const service of orderServices) {
+    //   const values = [orderId, service.service_id, 0];
+    //   rows3.append(await conn.query(orderServicesQuery, values));
+    // }
+
+    // console.log(rows3);
+    // console.log("to be continue in the order service");
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 module.exports = { createOrderr };

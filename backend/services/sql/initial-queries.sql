@@ -119,6 +119,7 @@ CREATE TABLE IF NOT EXISTS `order_info` (
   `order_info_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `order_total_price` int(11) NOT NULL,
+  `order_added_date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `estimated_completion_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `completion_date` DATETIME,
   `additional_request` TEXT,

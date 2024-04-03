@@ -28,9 +28,29 @@ async function getCustomerVehicle(formData, loggedInEmployeeToken) {
   return data;
 }
 
+async function getSingleVehicle(
+  customer_hash,
+  vehicle_id,
+  loggedInEmployeeToken
+) {
+  const headers = {
+    "x-access-token": loggedInEmployeeToken,
+  };
+
+  const data = await axios.get(
+    `/api/vehicle/single/${customer_hash}/${vehicle_id}`,
+    { headers }
+  );
+
+  // console.log(data);
+
+  return data;
+}
+
 const vehicleService = {
   addVehicle,
   getCustomerVehicle,
+  getSingleVehicle,
 };
 
 export default vehicleService;

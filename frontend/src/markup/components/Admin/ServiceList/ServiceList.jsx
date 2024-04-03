@@ -54,7 +54,7 @@ function ServiceList() {
     setServiceDescription(serviceDescriptionDom.current.value);
   }
 
-  // fetch data
+  // fetch all service data
   async function fetchData() {
     try {
       const data = await SERVICE.getAllServices(loggedInEmployeeToken);

@@ -128,7 +128,7 @@ function App() {
         />
 
         <Route
-          path="admin/order/add-new-order/select-service/:hash/:vehicle_id"
+          path="admin/order/add-new-order/select-service/:customer_hash/:vehicle_id"
           element={
             <PrivateAuthRoute roles={[1, 2, 3]}>
               <CreateNewOrders />

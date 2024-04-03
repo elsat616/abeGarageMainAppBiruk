@@ -390,6 +390,16 @@ input:disabled {
   font-size: 2vw;
 }
 
-.Orders{
+.Orders {
   padding-left: 35px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center; /* Center vertically */
+}
+
+.wide-checkbox {
+  width: 30px;
+  height: 30px;
 }

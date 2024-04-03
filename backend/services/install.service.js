@@ -22,7 +22,8 @@ async function install() {
 
   const fileContent = fs.readFileSync(queryfile, "utf-8");
   const lines = fileContent.split("\n");
-  console.log("File path:", queryfile);
+  // console.log("File path:", queryfile);
+  console.log("Tables Are About to be Created ...");
 
   // console.log(lines);
 

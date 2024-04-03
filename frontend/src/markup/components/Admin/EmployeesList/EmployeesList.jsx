@@ -146,7 +146,7 @@ function EmployeesList() {
                     </td>
                     <td>{employe.company_role_name}</td>
                     <td className="edit">
-                      <span className="hover1">
+                      <span  className="hover1">
                         <FaEdit color="#081336" />
                       </span>
 

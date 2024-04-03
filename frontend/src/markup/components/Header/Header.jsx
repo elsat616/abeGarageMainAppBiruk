@@ -102,7 +102,7 @@ function Header() {
                         isAdmin ||
                         isAdmin_manager_employee ? (
                           <li>
-                            <Link to="/admin">Admin</Link>
+                            <Link to="/admin">Dashboard</Link>
                           </li>
                         ) : null}
                       </ul>

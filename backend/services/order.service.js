@@ -6,6 +6,7 @@ const crypto = require("crypto");
 
 // create order sevice
 async function createOrderr(order) {
+  // console.log(order);
   try {
     const hash_id = crypto.randomUUID();
 
@@ -26,6 +27,8 @@ async function createOrderr(order) {
     if (rows.affectedRows !== 1) {
       return false;
     }
+
+    // console.log(rows.insertId);
 
     const order_id = rows.insertId;
 
@@ -53,8 +56,8 @@ async function createOrderr(order) {
     // insert the order data in to the order service table
     const query3 =
       "INSERT INTO order_services (order_id, service_id, service_completed) VALUES (?, ?, ?)";
-    let afeectedRows3 = 0;
-
+      
+      let afeectedRows3 = 0;
     // for (let service of order.order_services) {
     //   const values = [order_id, service.service_id, 0];
 
@@ -66,6 +69,8 @@ async function createOrderr(order) {
     for (let i = 0; i < order.order_services.length; i++) {
       const values = [order_id, order.order_services[i].service_id, 0];
       const rows3 = await connection.query(query3, values);
+
+      // console.log(rows3)
 
       afeectedRows3 = rows3.affectedRows + afeectedRows3;
     }

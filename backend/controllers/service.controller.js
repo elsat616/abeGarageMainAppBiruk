@@ -28,7 +28,6 @@ async function addService(req, res, next) {
 }
 
 async function getAllService(req, res, next) {
-  console.log("kkkkkkkkkkkk");
   try {
     const services = await getAllServicee();
 

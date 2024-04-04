@@ -85,7 +85,9 @@ function OrdersList() {
   }
 
   function handleDetail(id) {
-    navigate(`/admin/orders/order-detail/${id}`);
+    navigate(
+      `/admin/orders/order-detail/${"3188be6e-b74e-43b4-858d-c6cabc53ded0"}`
+    );
   }
 
   return (
@@ -127,7 +129,8 @@ function OrdersList() {
                         ? `${"inactive"}`
                         : `${"active"}`
                     }
-                    key={customer.customer_id}>
+                    key={customer.customer_id}
+                  >
                     <td>{customer.customer_id}</td>
                     <td>
                       <div> {customer.customer_first_name}</div>

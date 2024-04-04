@@ -14,6 +14,7 @@ import { FaEdit, FaGlideG } from "react-icons/fa";
 import { useAuth } from "../../../../Context/AuthContext";
 
 function CreateNewOrder() {
+  const navigate = useNavigate();
   const [customer1, setCustomer1] = useState("");
   const [vehicle1, setVehicle1] = useState([]);
   const [services, setServices] = useState([]);
@@ -27,6 +28,8 @@ function CreateNewOrder() {
     useState(">");
   const [completion_date, setcompletion_date] = useState(null);
   const [order_completed, setorder_completed] = useState(0);
+
+  const [serverMsg, setServerMsg] = useState("");
 
   // get the customer id
   const customer_id = customer1.customer_id;
@@ -70,17 +73,13 @@ function CreateNewOrder() {
     setestimated_completion_date(estimated_completion_dateDom.current.value);
   }
 
-  console.log(estimated_completion_date);
+  // console.log(estimated_completion_date);
 
   // console.log(selectedServices, "fff");
   // console.log(customer_id);
 
-  const order_services = {
-    order_services: {
-      service_id: selectedServices,
-    },
-  };
-  console.log(order_services);
+  // const order_services = [{ service_id: selectedServices }];
+  // console.log(order_services);
 
   const { customer_hash, vehicle_id } = useParams();
 
@@ -197,7 +196,6 @@ function CreateNewOrder() {
     // prevent the default behavior of the form submission
     e.preventDefault();
 
-    
     // prepare the data for form submission
     const formData = {
       employee_id,
@@ -211,16 +209,34 @@ function CreateNewOrder() {
       estimated_completion_date,
       completion_date,
       order_completed,
-      order_services,
+      order_services: selectedServices.map((serviceId) => ({
+        service_id: serviceId,
+      })),
     };
-    
+
+    // console.log(formData);
+
     try {
       const data = await Order.addOrder(formData, loggedInEmployeeToken);
-      console.log("ooooooooooooooooooooooobject")
 
-      console.log(data.statusText);
+      setServerMsg("");
+
+      console.log(data.response, "kjhgf");
+
+      // console.log("ooooooooooooooooooooooobject");
+
+      if (data.statusText == "OK") {
+        navigate("/admin/orders");
+      }
+
+      // console.log(data.statusText);
     } catch (error) {
-      console.log(error);
+      // console.log(error.response.data.error);
+      setServerMsg(error.response.data.error);
+
+      setTimeout(() => {
+        setServerMsg("");
+      }, 2000);
     }
   }
 
@@ -283,7 +299,8 @@ function CreateNewOrder() {
                 </span>
                 <span>
                   <Link
-                    to={`/admin/customer-update/${customer1.customer_hash}`}>
+                    to={`/admin/customer-update/${customer1.customer_hash}`}
+                  >
                     <FaEdit color="#081336" />
                   </Link>
                 </span>
@@ -370,7 +387,8 @@ function CreateNewOrder() {
                   <>
                     <div
                       key={i}
-                      className="bg-white Regular shadow my-2 d-flex ">
+                      className="bg-white Regular shadow my-2 d-flex "
+                    >
                       <div className="py-4 pb-1 px-4 flex-grow-1 ">
                         <h5 className="mb-1 font-weight-bold ">
                           {service.service_name}
@@ -412,6 +430,7 @@ function CreateNewOrder() {
                           //
 
                           className="wide-checkbox"
+                          // required
                         />
                       </div>
                       <div className="d-flex align-items-center px-4"></div>
@@ -431,6 +450,7 @@ function CreateNewOrder() {
               <div className="contact-form ">
                 <div>
                   <div className="row clearfix">
+                    <h3 className="ml-3">Service Description</h3>
                     <div className="form-group col-md-12">
                       <textarea
                         type="text"
@@ -439,9 +459,67 @@ function CreateNewOrder() {
                         ref={setAdditionalRequestDom}
                         onChange={additionalRequestTracker}
                         value={additional_request}
-                        required=""></textarea>
+                        required
+                      ></textarea>
                     </div>
 
+                    <h3 className="ml-3">Notes For Internal Use</h3>
+                    <div className="form-group col-md-12">
+                      <input
+                        type="text"
+                        className="wide-checkbox"
+                        name="service_name"
+                        placeholder="Notes For Internal Use"
+                        ref={notes_for_internal_useDom}
+                        onChange={notes_for_internal_useTracker}
+                        value={notes_for_internal_use}
+                        required
+                      />
+                    </div>
+
+                    <h3 className="ml-3">Notes For Customer</h3>
+                    <div className="form-group col-md-12">
+                      <input
+                        type="text"
+                        className="wide-checkbox"
+                        name="service_name"
+                        placeholder="notes_for_customer"
+                        ref={notes_for_customerDom}
+                        onChange={notes_for_customerTracker}
+                        value={notes_for_customer}
+                        required
+                      />
+                    </div>
+
+                    <h3 className="ml-3">Order Description</h3>
+                    <div className="form-group col-md-12">
+                      <input
+                        type="text"
+                        className="wide-checkbox"
+                        name="service_name"
+                        placeholder="order_description"
+                        ref={order_descriptionDom}
+                        onChange={order_descriptionTracker}
+                        value={order_description}
+                        required
+                      />
+                    </div>
+
+                    <h3 className="ml-3">Estimated Completion Date</h3>
+                    <div className="form-group col-md-12">
+                      <input
+                        type="date"
+                        className="p-3 bg-dark white"
+                        name="service_name"
+                        placeholder="estimated_completion_date"
+                        ref={estimated_completion_dateDom}
+                        onChange={estimated_completion_dateTracker}
+                        value={estimated_completion_date}
+                        required
+                      />
+                    </div>
+
+                    <h3 className="ml-3">Total Service Price</h3>
                     <div className="form-group col-md-12">
                       <input
                         type="number"
@@ -455,63 +533,25 @@ function CreateNewOrder() {
                       />
                     </div>
 
-                    <div className="form-group col-md-12">
-                      <input
-                        type="text"
-                        className="wide-checkbox"
-                        name="service_name"
-                        placeholder="Notes For Internal Use"
-                        ref={notes_for_internal_useDom}
-                        onChange={notes_for_internal_useTracker}
-                        value={notes_for_internal_use}
-                        // required
-                      />
-                    </div>
-
-                    <div className="form-group col-md-12">
-                      <input
-                        type="text"
-                        className="wide-checkbox"
-                        name="service_name"
-                        placeholder="notes_for_customer"
-                        ref={notes_for_customerDom}
-                        onChange={notes_for_customerTracker}
-                        value={notes_for_customer}
-                        // required
-                      />
-                    </div>
-
-                    <div className="form-group col-md-12">
-                      <input
-                        type="text"
-                        className="wide-checkbox"
-                        name="service_name"
-                        placeholder="order_description"
-                        ref={order_descriptionDom}
-                        onChange={order_descriptionTracker}
-                        value={order_description}
-                        // required
-                      />
-                    </div>
-
-                    <h2 for="">estimated_completion_date</h2>
-                    <div className="form-group col-md-12">
-                      <input
-                        type="date"
-                        // className="wide-checkbox"
-                        name="service_name"
-                        placeholder="estimated_completion_date"
-                        ref={estimated_completion_dateDom}
-                        onChange={estimated_completion_dateTracker}
-                        value={estimated_completion_date}
-                        // required
-                      />
-                    </div>
-
-                    <div className="form-group col-md-12">
+                    <div className="form-group col-md-12 pl-3">
                       <button className="theme-btn btn-style-one" type="submit">
                         <span>ADD SERVICE</span>
                       </button>
+
+                      {serverMsg && (
+                        <div
+                          className="validation-error"
+                          style={{
+                            color: "red",
+                            fontSize: "100%",
+                            fontWeight: "600",
+                            padding: "25px",
+                          }}
+                          role="alert"
+                        >
+                          {serverMsg}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

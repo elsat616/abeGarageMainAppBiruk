@@ -1,4 +1,5 @@
 // import the query function from the db.config.js file
+const { query } = require("express");
 const connection = require("../config/db.config");
 
 // import the crypto module to generate random id
@@ -56,8 +57,8 @@ async function createOrderr(order) {
     // insert the order data in to the order service table
     const query3 =
       "INSERT INTO order_services (order_id, service_id, service_completed) VALUES (?, ?, ?)";
-      
-      let afeectedRows3 = 0;
+
+    let afeectedRows3 = 0;
     // for (let service of order.order_services) {
     //   const values = [order_id, service.service_id, 0];
 
@@ -111,4 +112,92 @@ async function createOrderr(order) {
   }
 }
 
-module.exports = { createOrderr };
+async function getAllOrderss() {
+  try {
+    const query1 = `
+    SELECT 
+
+    orders.order_id,
+
+    orders.order_date,
+
+    orders.order_hash, 
+
+    customer_info.customer_first_name, 
+
+    customer_info.customer_last_name,
+
+    customer_identifier.customer_email, 
+
+    customer_identifier.customer_phone_number, 
+
+    customer_vehicle_info.vehicle_make, 
+
+    customer_vehicle_info.vehicle_year,
+
+    customer_vehicle_info.vehicle_tag, 
+
+    employee_info.employee_first_name, 
+
+    employee_info.employee_last_name, 
+
+    order_status.order_status 
+
+    FROM orders 
+
+    INNER JOIN customer_info ON orders.customer_id = customer_info.customer_id 
+
+    INNER JOIN  customer_identifier ON orders.customer_id = customer_identifier.customer_id 
+
+    INNER JOIN customer_vehicle_info ON orders.vehicle_id = customer_vehicle_info.vehicle_id 
+
+    INNER JOIN employee_info ON orders.employee_id = employee_info.employee_id 
+
+    INNER JOIN order_status ON orders.order_id = order_status.order_id 
+
+    INNER JOIN order_info ON orders.order_id = order_info.order_id`;
+
+    const rows = await connection.query(query1);
+
+    // const rows2 = await connection.query(query2);
+
+    // console.log(rows);
+
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getsingleOrderr(order) {
+  // console.log(order)
+  try {
+    const query =
+      "SELECT orders.order_id, orders.order_hash, customer_info.customer_first_name, customer_info.customer_last_name, customer_identifier.customer_email, customer_identifier.customer_phone_number, customer_vehicle_info.vehicle_make, employee_info.employee_first_name, employee_info.employee_last_name, order_status.order_status, order_info.additional_request, order_info.additional_requests_completed FROM orders INNER JOIN customer_info ON orders.customer_id = customer_info.customer_id INNER JOIN  customer_identifier ON orders.customer_id = customer_identifier.customer_id INNER JOIN customer_vehicle_info ON orders.vehicle_id = customer_vehicle_info.vehicle_id INNER JOIN employee_info ON orders.employee_id = employee_info.employee_id INNER JOIN order_status ON orders.order_id = order_status.order_id INNER JOIN order_info ON orders.order_id = order_info.order_id WHERE orders.order_hash = ?";
+
+    const rows = await connection.query(query, [order]);
+
+    // console.log(rows.length);
+
+    if (rows.length < 1) {
+      return;
+    }
+
+    const query2 =
+      "SELECT orders.order_hash, order_services.service_id, common_services.service_name, common_services.service_description, order_services.service_completed FROM order_services INNER JOIN orders ON order_services.order_id = orders.order_id INNER JOIN common_services ON order_services.service_id = common_services.service_id WHERE orders.order_hash = ?";
+
+    const rows2 = await connection.query(query2, [order]);
+
+    // console.log(rows2);
+
+    // console.log({ ...rows[0], order_services: rows2 });
+
+    // const order = [{ ...rows[0], order_services: rows2 }]
+
+    return [{ ...rows[0], order_services: rows2 }];
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+module.exports = { createOrderr, getAllOrderss, getsingleOrderr };

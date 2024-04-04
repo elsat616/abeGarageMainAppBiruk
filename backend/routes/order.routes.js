@@ -18,8 +18,22 @@ const orderController = require("../controllers/order.controller");
 // create a route to handle the service request in post
 router.post(
   "/api/order",
-    // [verifyToken, isAdmin],
+  // [verifyToken, isAdmin],
   orderController.createOrder
+);
+
+// create a route to handle the service request in get
+router.get(
+  "/api/orders",
+  // [verifyToken, isAdmin],
+  orderController.getAllOrders
+);
+
+// create a route to handle the get single order request in get
+router.get(
+  "/api/order/single/:hash",
+  //   [verifyToken, isAdmin_Manager],
+  orderController.getsingleOrder
 );
 
 // export the router

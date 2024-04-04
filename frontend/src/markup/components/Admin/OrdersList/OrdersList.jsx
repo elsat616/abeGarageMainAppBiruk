@@ -13,16 +13,17 @@ import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { useAuth } from "../../../../Context/AuthContext";
 
 // import the employee service to use the get employees function
-import cutomerService from "../../../../services/customer.services";
+import orderService from "../../../../services/order.services";
 
 // import the date-fns library
 import { format } from "date-fns";
-import customerService from "../../../../services/customer.services";
 
 ////////////////////////////////////////
 function OrdersList() {
   //  employees state to store the emplooyes data
-  const [customers, setCustomers] = useState([]);
+  const [orders, setOrders] = useState([]);
+
+  // console.log(orders[0]?.order_id);
 
   // console.log(customers);
 
@@ -53,7 +54,7 @@ function OrdersList() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await customerService?.getAllCustomers(token);
+        const data = await orderService.getAllOrder(token);
         // console.log(data);
 
         if (data?.statusText !== "OK") {
@@ -70,7 +71,7 @@ function OrdersList() {
         }
 
         // // set customers data
-        setCustomers(data?.data?.customers);
+        setOrders(data?.data.Orders);
 
         // console.log(data?.data?.customers);
       } catch (error) {
@@ -85,9 +86,7 @@ function OrdersList() {
   }
 
   function handleDetail(id) {
-    navigate(
-      `/admin/orders/order-detail/${"3188be6e-b74e-43b4-858d-c6cabc53ded0"}`
-    );
+    navigate(`/admin/orders/order-detail/${id}`);
   }
 
   return (
@@ -122,41 +121,60 @@ function OrdersList() {
                 </tr>
               </thead>
               <tbody>
-                {customers.map((customer) => (
-                  <tr
-                    className={
-                      !customer.active_customer_status
-                        ? `${"inactive"}`
-                        : `${"active"}`
-                    }
-                    key={customer.customer_id}
-                  >
-                    <td>{customer.customer_id}</td>
+                {orders.map((order) => (
+                  <tr className="order-list" key={order.order_id}>
+                    <td>{order.order_id}</td>
+
                     <td>
-                      <div> {customer.customer_first_name}</div>
-                      <div> {customer.customer_first_name}</div>
-                      <div> {customer.customer_first_name}</div>
+                      <div>
+                        {" "}
+                        {order.customer_first_name +
+                          " " +
+                          order.customer_last_name}
+                      </div>
+                      <div className="list-email"> {order.customer_email}</div>
+                      <div className="list-email">
+                        {" "}
+                        {order.customer_phone_number}
+                      </div>
                     </td>
 
                     <td>
-                      <div> {customer.customer_first_name}</div>
-                      <div> {customer.customer_first_name}</div>
-                      <div> {customer.customer_first_name}</div>
+                      <div> {order.vehicle_make}</div>
+                      <div className="list-email"> {order.vehicle_year}</div>
+                      <div className="list-email"> {order.vehicle_tag}</div>
                     </td>
-                    <td>{customer.customer_phone_number}</td>
+
+                    <td className="order-date">
+                      {format(new Date(order.order_date), "MM/dd/yyyy")}
+                    </td>
+
                     <td>
-                      {format(
-                        new Date(customer.customer_added_date),
-                        "MM - dd - yyyy | kk:mm"
-                      )}
+                      <div className="order-date">
+                        {" "}
+                        {order.employee_first_name +
+                          " " +
+                          order.employee_last_name}
+                      </div>
                     </td>
-                    <td>{customer.active_customer_status ? "Yes" : "No"}</td>
+
+                    <td className="border py-4">
+                      <h6
+                        className={
+                          order.order_status
+                            ? "text-center rounded-pill bg-success font-weight-bold text-white                            "
+                            : "text-center rounded-pill bg-warning font-weight-bold"
+                        }>
+                        {order.order_status ? "Completed" : "In Progress"}
+                      </h6>
+                    </td>
+
                     <td className="edit">
                       <span onClick={() => handleEdit("1")} className="hover1">
                         <FaEdit color="#081336" />
                       </span>
 
-                      <span onClick={() => handleDetail("2")}>
+                      <span onClick={() => handleDetail(order.order_hash)}>
                         <FaArrowUpRightFromSquare color="#081336" />
                       </span>
                     </td>

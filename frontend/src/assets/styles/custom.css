@@ -396,10 +396,38 @@ input:disabled {
 
 .checkbox-container {
   display: flex;
-  align-items: center; /* Center vertically */
+  align-items: center;
+  /* Center vertically */
 }
 
 .wide-checkbox {
   width: 30px;
   height: 30px;
+}
+
+.order-list {
+  font-weight: 600 !important;
+  font-size: large !important;
+  cursor: pointer;
+  color: #1d2a52 !important;
+  font-weight: 700 !important;
+}
+
+.list-email {
+  font-size: 15px;
+  font-weight: 400;
+  color: rgb(90, 84, 84);
+}
+
+.order-date {
+  font-size: 18px;
+  font-weight: 400;
+  color: #1d2a52 !important;
+}
+
+
+.order_status{
+  display: flex;
+  /* width: 50px; */
+  align-items: center;
 }

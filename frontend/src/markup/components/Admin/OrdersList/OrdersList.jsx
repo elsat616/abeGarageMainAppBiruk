@@ -86,7 +86,7 @@ function OrdersList() {
   }
 
   function handleDetail(id) {
-    navigate(`/admin/orders/order-detail/${id}`);
+    navigate(`/orders/order-detail/${id}`);
   }
 
   return (

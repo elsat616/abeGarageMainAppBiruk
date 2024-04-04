@@ -12,8 +12,6 @@ async function addOrder(formData, loggedInEmployeeToken) {
   return data;
 }
 
-
-
 async function getAllOrder(loggedInEmployeeToken) {
   const headers = {
     "x-access-token": loggedInEmployeeToken,
@@ -26,12 +24,18 @@ async function getAllOrder(loggedInEmployeeToken) {
   return data;
 }
 
+async function getSingleOrder(formData) {
+  const data = await axios.get(`api/order/single/${formData}`);
 
+  // console.log(data)
 
+  return data;
+}
 
 const Order = {
   addOrder,
   getAllOrder,
+  getSingleOrder,
 };
 
 export default Order;

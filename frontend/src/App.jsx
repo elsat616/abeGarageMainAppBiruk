@@ -110,12 +110,8 @@ function App() {
         />
 
         <Route
-          path="admin/orders/order-detail/:hash"
-          element={
-            <PrivateAuthRoute roles={[1, 2, 3]}>
-              <OrderDetails />
-            </PrivateAuthRoute>
-          }
+          path="/orders/order-detail/:order_hash"
+          element={<OrderDetails />}
         />
 
         <Route

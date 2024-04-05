@@ -36,5 +36,12 @@ router.get(
   orderController.getsingleOrder
 );
 
+// create a route to handle the order request in put
+router.put(
+  "/api/order/update",
+  //   [verifyToken, isAdmin],
+  orderController.updateorder
+);
+
 // export the router
 module.exports = router;

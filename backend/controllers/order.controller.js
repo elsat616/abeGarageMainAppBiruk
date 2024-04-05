@@ -3,6 +3,7 @@ const {
   createOrderr,
   getAllOrderss,
   getsingleOrderr,
+  updateOrderr,
 } = require("../services/order.service");
 
 async function createOrder(req, res, next) {
@@ -80,4 +81,14 @@ async function getsingleOrder(req, res, next) {
   } catch (error) {}
 }
 
-module.exports = { createOrder, getAllOrders, getsingleOrder };
+async function updateorder(req, res, next) {
+  // console.log(req.body);
+
+  try {
+    const updateOrder = updateOrderr(req.body);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+module.exports = { createOrder, getAllOrders, getsingleOrder, updateorder };

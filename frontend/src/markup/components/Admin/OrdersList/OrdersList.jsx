@@ -170,7 +170,7 @@ function OrdersList() {
                     </td>
 
                     <td className="edit">
-                      <span onClick={() => handleEdit("1")} className="hover1">
+                      <span onClick={() => handleEdit(order.order_hash)} className="hover1">
                         <FaEdit color="#081336" />
                       </span>
 

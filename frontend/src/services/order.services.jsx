@@ -32,10 +32,25 @@ async function getSingleOrder(formData) {
   return data;
 }
 
+async function updateOrder(formData, loggedInEmployeeToken) {
+  console.log(formData);
+
+  const headers = {
+    "x-access-token": loggedInEmployeeToken,
+  };
+
+  const data = await axios.put("api/order/update", formData, { headers });
+
+  console.log(data)
+
+  // return data;
+}
+
 const Order = {
   addOrder,
   getAllOrder,
   getSingleOrder,
+  updateOrder
 };
 
 export default Order;

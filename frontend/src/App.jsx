@@ -101,7 +101,7 @@ function App() {
         />
 
         <Route
-          path="admin/orders/order-update/:hash"
+          path="admin/orders/order-update/:order_hash"
           element={
             <PrivateAuthRoute roles={[1, 2, 3]}>
               <EditOrder />

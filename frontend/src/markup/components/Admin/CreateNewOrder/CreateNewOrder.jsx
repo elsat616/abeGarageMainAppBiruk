@@ -19,13 +19,13 @@ function CreateNewOrder() {
   const [vehicle1, setVehicle1] = useState([]);
   const [services, setServices] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
-  const [additional_request, setAdditionalRequest] = useState(">");
+  const [additional_request, setAdditionalRequest] = useState("--");
   const [order_total_price, setTotalServicePrice] = useState("");
-  const [notes_for_internal_use, setnotes_for_internal_use] = useState(">");
-  const [notes_for_customer, setnotes_for_customer] = useState(">");
-  const [order_description, setorder_description] = useState(">");
+  const [notes_for_internal_use, setnotes_for_internal_use] = useState("--");
+  const [notes_for_customer, setnotes_for_customer] = useState("-");
+  const [order_description, setorder_description] = useState("--");
   const [estimated_completion_date, setestimated_completion_date] =
-    useState(">");
+    useState("--");
   const [completion_date, setcompletion_date] = useState(null);
   const [order_completed, setorder_completed] = useState(0);
 

@@ -13,7 +13,7 @@ function OrderDetail() {
 
   const { order_hash } = useParams();
 
-  console.log(orders.order_date);
+  // console.log(orders);
 
   async function fetchData() {
     try {
@@ -141,8 +141,7 @@ function OrderDetail() {
                   <>
                     <div
                       key={i}
-                      className="bg-white Regular shadow my-2 d-flex "
-                    >
+                      className="bg-white Regular shadow my-2 d-flex ">
                       <div className="py-4 pb-1 px-4 flex-grow-1 ">
                         <h5 className="mb-1 font-weight-bold ">
                           {service.service_name}
@@ -151,14 +150,13 @@ function OrderDetail() {
                           {service.service_description}
                         </h6>
                       </div>
-                      <div className="order_status">
+                      <div className="order_status px-5">
                         <h6
                           className={
                             service.service_completed
-                              ? "text-center rounded-pill bg-success font-weight-bold text-white px-3"
-                              : "text-center rounded-pill bg-warning font-weight-bold px-3"
-                          }
-                        >
+                              ? "text-center rounded-pill bg-success font-weight-bold text-white px-5"
+                              : "text-center rounded-pill bg-warning font-weight-bold px-5"
+                          }>
                           {service.service_completed
                             ? "Completed"
                             : "In Progress"}
@@ -187,7 +185,7 @@ function OrderDetail() {
                 <div>
                   <div className="bg-white Regular shadow my-2 d-flex ">
                     <div className="py-4 pb-1 px-4 flex-grow-1 ">
-                      <h4 className="mb-1 font-weight-bold ">
+                      <h5 className="mb-1 font-weight-bold ">
                         Order Date:
                         <span className="additional">
                           {/* {format(
@@ -195,17 +193,6 @@ function OrderDetail() {
                             " MM - dd - yyyy"
                           )} */}
                         </span>
-                      </h4>
-                    </div>
-
-                    <div className="d-flex align-items-center px-4"></div>
-                  </div>
-
-                  <div className="bg-white Regular shadow my-2 d-flex ">
-                    <div className="py-4 pb-1 px-4 flex-grow-1 ">
-                      <h5 className="mb-1 font-weight-bold ">
-                        {"order Date"}:{" "}
-                        <span className="additional">sdfvxdf</span>
                       </h5>
                     </div>
 
@@ -215,8 +202,10 @@ function OrderDetail() {
                   <div className="bg-white Regular shadow my-2 d-flex ">
                     <div className="py-4 pb-1 px-4 flex-grow-1 ">
                       <h5 className="mb-1 font-weight-bold ">
-                        {"order Date"}:{" "}
-                        <span className="additional">sdfvxdf</span>
+                        Additional Request:
+                        <span className="additional">
+                          {orders.additional_request}
+                        </span>
                       </h5>
                     </div>
 
@@ -226,8 +215,11 @@ function OrderDetail() {
                   <div className="bg-white Regular shadow my-2 d-flex ">
                     <div className="py-4 pb-1 px-4 flex-grow-1 ">
                       <h5 className="mb-1 font-weight-bold ">
-                        {"order Date"}:{" "}
-                        <span className="additional">sdfvxdf</span>
+                        order Date:
+                        <span className="additional">
+                          {" "}
+                          ${orders.order_total_price}
+                        </span>
                       </h5>
                     </div>
 
@@ -238,12 +230,11 @@ function OrderDetail() {
                     {" "}
                     <h6
                       className={
-                        "order.order_status"
-                          ? "text-center rounded-pill bg-success font-weight-bold text-white py-2 py-"
-                          : "text-center rounded-pill bg-warning font-weight-bold px-3 py-"
-                      }
-                    >
-                      {"order.order_status" ? "Completed" : "In Progress"}
+                        orders.order_status
+                          ? "text-center rounded-pill bg-success font-weight-bold text-white py-2 py-2"
+                          : "text-center rounded-pill bg-warning font-weight-bold px-3 py-2"
+                      }>
+                      {orders.order_status ? "Completed" : "In Progress"}
                     </h6>
                   </div>
                 </div>

@@ -19,7 +19,7 @@ const serviceController = require("../controllers/service.controller");
 router.post(
   "/api/service",
   //   [verifyToken, isAdmin],
-  serviceController.addService
+  serviceController.createService
 );
 
 // create a route to handle the service request in get

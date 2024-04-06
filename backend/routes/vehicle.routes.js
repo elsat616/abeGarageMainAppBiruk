@@ -7,9 +7,7 @@ const router = express.Router();
 // import the authMiddleware
 const {
   verifyToken,
-  isAdmin,
-  isAdmin_Manager,
-  isAdmin_Manager_Employee,
+  isAdmin
 } = require("../middlewares/auth.middleware");
 
 // import the customer controller
@@ -19,7 +17,7 @@ const vehicleController = require("../controllers/vehicle.controller");
 router.post(
   "/api/vehicle",
   [verifyToken, isAdmin],
-  vehicleController.addVehicle
+  vehicleController.createVehicle
 );
 
 // create a route to handle the employee request in get

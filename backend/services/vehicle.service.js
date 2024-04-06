@@ -3,7 +3,7 @@ const { query } = require("express");
 const connection = require("../config/db.config");
 
 // add customer vehicle information
-async function addVehiclee(vehicle) {
+async function createVehicle(vehicle) {
   const customer_hash = vehicle.customer_hash;
 
   // console.log(customer_hash);
@@ -66,8 +66,8 @@ async function getVehicleeById(hash) {
   }
 }
 
-// get the Customer single Vehiclee 
-async function getSingleVehiclee(single) {
+// get the Customer single Vehiclee
+async function getSingleVehicle(single) {
   // console.log(single.customer_hash);
   // to get the customer Id
   const query = "SELECT * FROM customer_identifier WHERE customer_hash = ?";
@@ -93,4 +93,4 @@ async function getSingleVehiclee(single) {
   return rows1;
 }
 
-module.exports = { addVehiclee, getVehicleeById, getSingleVehiclee };
+module.exports = { createVehicle, getVehicleeById, getSingleVehicle };

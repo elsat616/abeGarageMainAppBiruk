@@ -1,10 +1,5 @@
 // import order service
-const {
-  createOrderr,
-  getAllOrderss,
-  getsingleOrderr,
-  updateOrderr,
-} = require("../services/order.service");
+const orderService = require("../services/order.service");
 
 async function createOrder(req, res, next) {
   // console.log(req.body.order_services.length);
@@ -15,7 +10,7 @@ async function createOrder(req, res, next) {
     });
   }
   try {
-    const createdOrder = await createOrderr(req.body);
+    const createdOrder = await orderService.createOrder(req.body);
 
     if (!createdOrder) {
       return res.status(400).json({
@@ -34,7 +29,7 @@ async function createOrder(req, res, next) {
 
 async function getAllOrders(req, res, next) {
   try {
-    const AllOrders = await getAllOrderss();
+    const AllOrders = await orderService.getAllOrders();
 
     // console.log(AllOrders)
 
@@ -64,7 +59,7 @@ async function getsingleOrder(req, res, next) {
   const service_hash = req.params.hash;
 
   try {
-    const singleOrder = await getsingleOrderr(service_hash);
+    const singleOrder = await orderService.getsingleOrder(service_hash);
 
     // console.log(singleOrder)
 
@@ -85,7 +80,7 @@ async function updateorder(req, res, next) {
   // console.log(req.body);
 
   try {
-    const updateOrder = updateOrderr(req.body);
+    const updateOrder = orderService.updateOrder(req.body);
   } catch (error) {
     console.log(error);
   }

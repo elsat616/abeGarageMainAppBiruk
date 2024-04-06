@@ -1,12 +1,5 @@
 // import the employee service
-const {
-  checkIfEmployeeExists,
-  createEmploye,
-  getAllEmployees,
-  updateEmploye,
-  deleteEmploye,
-  getSingleEmploye,
-} = require("../services/employee.service");
+const employeeService = require("../services/employee.service");
 
 // create Employee controller
 async function createEmployee(req, res, next) {
@@ -14,7 +7,7 @@ async function createEmployee(req, res, next) {
 
   // console.log(req.headers);
 
-  const employeeExists = await checkIfEmployeeExists(employee_email);
+  const employeeExists = await employeeService.checkIfEmployeeExists(employee_email);
 
   // if employee exists, send a response to a client
   if (employeeExists) {
@@ -26,7 +19,7 @@ async function createEmployee(req, res, next) {
       const employeeData = req.body;
 
       // create the employee
-      const employee = await createEmploye(employeeData);
+      const employee = await employeeService.createEmploye(employeeData);
 
       // console.log(employee);
 
@@ -52,7 +45,7 @@ async function createEmployee(req, res, next) {
 async function getAllEmployeees(req, res, next) {
   try {
     // call the getAllEmployees methosd from the emplyees service
-    const employees = await getAllEmployees();
+    const employees = await employeeService.getAllEmployees();
 
     if (!employees) {
       res.status(400).json({
@@ -77,7 +70,7 @@ async function getSingleEmployee(req, res, next) {
   const employee_hash = req.params.hash;
   console.log(employee_hash)
   try {
-    const singleEmployee = await getSingleEmploye(employee_hash);
+    const singleEmployee = await employeeService.getSingleEmploye(employee_hash);
     // console.log(singleEmployee);
 
     if (!singleEmployee) {
@@ -101,7 +94,7 @@ async function getSingleEmployee(req, res, next) {
 // update Employee controller
 async function updateEmployee(req, res, next) {
   try {
-    const updateEmployee = await updateEmploye(req.body);
+    const updateEmployee = await employeeService.updateEmploye(req.body);
 
     // console.log(updateEmployee);
 
@@ -139,7 +132,7 @@ async function updateEmployee(req, res, next) {
 async function deleteEmployee(req, res, next) {
   const { employee_id } = req.body;
   try {
-    const deleteEmployee = await deleteEmploye(employee_id);
+    const deleteEmployee = await employeeService.deleteEmploye(employee_id);
 
     if (!deleteEmploye) {
       res.status(200).json({

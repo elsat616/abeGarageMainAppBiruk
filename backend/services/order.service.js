@@ -6,7 +6,7 @@ const connection = require("../config/db.config");
 const crypto = require("crypto");
 
 // create order sevice
-async function createOrderr(order) {
+async function createOrder(order) {
   // console.log(order);
   try {
     const hash_id = crypto.randomUUID();
@@ -59,12 +59,6 @@ async function createOrderr(order) {
       "INSERT INTO order_services (order_id, service_id, service_completed) VALUES (?, ?, ?)";
 
     let afeectedRows3 = 0;
-    // for (let service of order.order_services) {
-    //   const values = [order_id, service.service_id, 0];
-
-    //   const rows3 = await connection.query(query3, values);
-    //   afeectedRows3 = rows3.affectedRows + afeectedRows3;
-    // }
 
     // console.log(order.order_services.length)
     for (let i = 0; i < order.order_services.length; i++) {
@@ -82,17 +76,6 @@ async function createOrderr(order) {
       return false;
     }
 
-    // let rows3 = [];
-
-    // for (const service of orderServices) {
-    //   const values = [orderId, service.service_id, 0];
-    //   rows3.append(await conn.query(orderServicesQuery, values));
-    // }
-
-    // console.log(rows3);
-    // console.log("to be continue in the order service");
-
-    /////////////////////////////////////////////////////////////////
     // insert the order data in to the order status table
 
     const query4 =
@@ -112,7 +95,7 @@ async function createOrderr(order) {
   }
 }
 
-async function getAllOrderss() {
+async function getAllOrders() {
   try {
     const query1 = `
     SELECT 
@@ -171,7 +154,7 @@ async function getAllOrderss() {
   }
 }
 
-async function getsingleOrderr(order) {
+async function getsingleOrder(order) {
   // console.log(order)
   try {
     const query =
@@ -192,17 +175,13 @@ async function getsingleOrderr(order) {
 
     // console.log(rows2);
 
-    // console.log({ ...rows[0], order_services: rows2 });
-
-    // const order = [{ ...rows[0], order_services: rows2 }]
-
     return [{ ...rows[0], order_services: rows2 }];
   } catch (error) {
     console.log(error);
   }
 }
 
-async function updateOrderr(order) {
+async function updateOrder(order) {
   // console.log(order);
   try {
     const query =
@@ -250,4 +229,4 @@ async function updateOrderr(order) {
   }
 }
 
-module.exports = { createOrderr, getAllOrderss, getsingleOrderr, updateOrderr };
+module.exports = { createOrder, getAllOrders, getsingleOrder, updateOrder };

@@ -22,7 +22,7 @@ async function checkIfCustomerExists(email) {
 }
 
 // a function to create a new customer
-async function createCustomerr(customer) {
+async function createCustomer(customer) {
   // console.log(customer)
 
   let createdCustomer = {};
@@ -72,7 +72,7 @@ async function createCustomerr(customer) {
 }
 
 // a Function to get All customers
-async function getAllCustomerss() {
+async function getAllCustomers() {
   const query =
     "SELECT * FROM customer_identifier INNER JOIN customer_info ON customer_identifier.customer_id = customer_info.customer_id ORDER BY customer_identifier.customer_id DESC";
 
@@ -82,7 +82,7 @@ async function getAllCustomerss() {
   return rows;
 }
 
-async function updateCustomerr(customer) {
+async function updateCustomer(customer) {
   const customer_hash = customer.customer_hash;
 
   const query = "SELECT * FROM customer_identifier WHERE customer_hash = ?";
@@ -114,7 +114,7 @@ async function updateCustomerr(customer) {
 }
 
 // a function to get single customer
-async function getSingleCustomerr(customer) {
+async function getSingleCustomer(customer) {
   const customer_hash = customer;
 
   const query = "SELECT * FROM customer_identifier WHERE customer_hash = ?";
@@ -134,7 +134,7 @@ async function getSingleCustomerr(customer) {
 }
 
 // find customer with query parameter
-async function findCustomerr(customer) {
+async function findCustomer(customer) {
   // console.log(customer)
 
   const query = `SELECT * FROM customer_identifier INNER JOIN customer_info ON customer_identifier.customer_id = customer_info.customer_id WHERE customer_info.customer_first_name LIKE '%${customer.query}%' OR customer_info.customer_last_name LIKE '%${customer.query}%' OR customer_identifier.customer_email LIKE '%${customer.query}%' OR customer_identifier.customer_phone_number LIKE '%${customer.query}%'`;
@@ -148,9 +148,9 @@ async function findCustomerr(customer) {
 
 module.exports = {
   checkIfCustomerExists,
-  createCustomerr,
-  getAllCustomerss,
-  updateCustomerr,
-  getSingleCustomerr,
-  findCustomerr,
+  createCustomer,
+  getAllCustomers,
+  updateCustomer,
+  getSingleCustomer,
+  findCustomer,
 };

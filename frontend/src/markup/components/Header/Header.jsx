@@ -93,7 +93,7 @@ function Header() {
                           <Link to="/about">About Us</Link>
                         </li>
                         <li className="dropdown">
-                          <Link to="/services">Services</Link>
+                          <Link to="/service">Services</Link>
                         </li>
                         <li>
                           <Link to="/contact">Contact Us</Link>

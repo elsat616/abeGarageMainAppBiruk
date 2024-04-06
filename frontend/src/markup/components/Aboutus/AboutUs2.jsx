@@ -1,21 +1,19 @@
 import React from "react";
-import banner from "../../../assets/images/banner/oilchange.jpg";
-
-function BottomBanner() {
+import bbanner from "../../../assets/images/custom/bottomBanner.png"
+function AboutUs2() {
   return (
     <section className="video-section">
       <div
-        data-parallax={{ y: 50 }}
+        data-parallax='{"y": 50}'
         className="sec-bg"
         style={{
-          backgroundImage: `url(${banner})`,
-        }}
+            backgroundImage: `url(${bbanner})`,
+          }}
       ></div>
-
       <div className="auto-container">
-        <h5>Working since 1999</h5>
+        <h5>Working since 1992</h5>
         <h2>
-          Tuneup Your Car <br /> to Next Level
+          We are leader <br /> in Car Mechanical Work
         </h2>
         <div className="video-box">
           <div className="video-btn">
@@ -35,4 +33,4 @@ function BottomBanner() {
   );
 }
 
-export default BottomBanner;
+export default AboutUs2;

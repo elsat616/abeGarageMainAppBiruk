@@ -4,7 +4,7 @@ const connection = require("../config/db.config");
 // import the crypto module to generate random id
 const crypto = require("crypto");
 
-async function addServicee(servicee) {
+async function createService(service) {
   // console.log(servicee)
 
   const hash_id = crypto.randomUUID();
@@ -13,8 +13,8 @@ async function addServicee(servicee) {
     "INSERT INTO common_services (service_name,service_description,service_hash) VALUES(?,?,?)";
 
   const rows = await connection.query(query, [
-    servicee.service_name,
-    servicee.service_description,
+    service.service_name,
+    service.service_description,
     hash_id,
   ]);
 
@@ -23,7 +23,7 @@ async function addServicee(servicee) {
   return rows;
 }
 
-async function getAllServicee() {
+async function getAllService() {
   try {
     const query = "SELECT * FROM common_services";
 
@@ -37,7 +37,7 @@ async function getAllServicee() {
   }
 }
 
-async function updateServicee(service) {
+async function updateService(service) {
   // console.log(service)
 
   const query =
@@ -52,7 +52,7 @@ async function updateServicee(service) {
   return rows;
 }
 
-async function getsingleServicee(service) {
+async function getsingleService(service) {
   // console.log(service)
 
   const query = "SELECT * FROM common_services WHERE service_hash = ?";
@@ -65,8 +65,8 @@ async function getsingleServicee(service) {
 }
 
 module.exports = {
-  addServicee,
-  getAllServicee,
-  updateServicee,
-  getsingleServicee,
+  createService,
+  getAllService,
+  updateService,
+  getsingleService,
 };

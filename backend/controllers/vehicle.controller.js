@@ -1,18 +1,14 @@
-const {
-  addVehiclee,
-  getVehicleeById,
-  getSingleVehiclee,
-} = require("../services/vehicle.service");
+const vehicleService = require("../services/vehicle.service");
 
-async function addVehicle(req, res, next) {
+async function createVehicle(req, res, next) {
   //   console.log(req.body);
 
   try {
-    const AddedVehicle = await addVehiclee(req.body);
+    const AddedVehicle = await vehicleService.createVehicle(req.body);
 
     // console.log(AddedVehicle.affectedRows)
 
-    if (!addVehiclee) {
+    if (!createVehicle) {
       return res.status(400).json({
         error: "Failed to add vehicle",
       });
@@ -35,7 +31,7 @@ async function getVehicleById(req, res, next) {
   // console.log(req.query);
 
   try {
-    const customerVehicle = await getVehicleeById(req.query);
+    const customerVehicle = await vehicleService.getVehicleeById(req.query);
 
     // console.log(SingleVehicle.length)
 
@@ -60,7 +56,7 @@ async function getVehicleById(req, res, next) {
 
 async function getSingleVehicle(req, res, next) {
   try {
-    const SingleVehicle = await getSingleVehiclee(req.params);
+    const SingleVehicle = await vehicleService.getSingleVehicle(req.params);
 
     // console.log(SingleVehicle)
 
@@ -82,4 +78,4 @@ async function getSingleVehicle(req, res, next) {
   }
 }
 
-module.exports = { addVehicle, getVehicleById, getSingleVehicle };
+module.exports = { createVehicle, getVehicleById, getSingleVehicle };

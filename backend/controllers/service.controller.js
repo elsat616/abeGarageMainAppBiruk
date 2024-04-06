@@ -1,16 +1,11 @@
-const e = require("express");
-const {
-  addServicee,
-  getAllServicee,
-  updateServicee,
-  getsingleServicee,
-} = require("../services/service.service");
+const { query } = require("express");
+const serviceService = require("../services/service.service");
 
-async function addService(req, res, next) {
+async function createService(req, res, next) {
   //   console.log(req.body);
 
   try {
-    const newService = await addServicee(req.body);
+    const newService = await serviceService.createService(req.body);
 
     if (!newService) {
       return res.status(400).json({
@@ -29,7 +24,7 @@ async function addService(req, res, next) {
 
 async function getAllService(req, res, next) {
   try {
-    const services = await getAllServicee();
+    const services = await serviceService.getAllService();
 
     if (!services) {
       res.status(400).json({
@@ -52,7 +47,7 @@ async function getAllService(req, res, next) {
 async function updateService(req, res, next) {
   // console.log(req.body)
   try {
-    const updateService = await updateServicee(req.body);
+    const updateService = await serviceService.updateService(req.body);
 
     // console.log(updateService.affectedRows)
 
@@ -85,7 +80,7 @@ async function getsingleService(req, res, next) {
   // console.log(service_hash)
 
   try {
-    const singleService = await getsingleServicee(service_hash);
+    const singleService = await serviceService.getsingleService(service_hash);
 
     // console.log(singleService[0].service_id);
 
@@ -107,4 +102,9 @@ async function getsingleService(req, res, next) {
   }
 }
 
-module.exports = { addService, getAllService, updateService, getsingleService };
+module.exports = {
+  createService,
+  getAllService,
+  updateService,
+  getsingleService,
+};

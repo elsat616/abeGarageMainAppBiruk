@@ -1,12 +1,5 @@
 // import the customer service
-const {
-  checkIfCustomerExists,
-  createCustomerr,
-  getAllCustomerss,
-  updateCustomerr,
-  getSingleCustomerr,
-  findCustomerr,
-} = require("../services/customer.service");
+const customerService = require("../services/customer.service");
 
 // a function to create a customer
 async function createCustomer(req, res, next) {
@@ -14,7 +7,7 @@ async function createCustomer(req, res, next) {
   // console.log(customer_email)
 
   try {
-    const customerExists = await checkIfCustomerExists(customer_email);
+    const customerExists = await customerService.checkIfCustomerExists(customer_email);
     // console.log(customerExists)
 
     if (customerExists) {
@@ -26,7 +19,7 @@ async function createCustomer(req, res, next) {
         const customerData = req.body;
         // console.log(customerData);
 
-        const newCustomer = await createCustomerr(customerData);
+        const newCustomer = await customerService.createCustomer(customerData);
         // console.log(newCustomer)
 
         if (!newCustomer) {
@@ -51,7 +44,7 @@ async function createCustomer(req, res, next) {
 // a function to get all customer
 async function getAllCustomers(req, res, next) {
   try {
-    const customers = await getAllCustomerss();
+    const customers = await customerService.getAllCustomers();
 
     if (!customers) {
       res.status(400).json({
@@ -74,7 +67,7 @@ async function getAllCustomers(req, res, next) {
 async function updateCustomer(req, res, next) {
   // console.log(req.body)
   try {
-    const updateCustomer = await updateCustomerr(req.body);
+    const updateCustomer = await customerService.updateCustomer(req.body);
 
     // console.log(updateCustomer)
 
@@ -109,7 +102,7 @@ async function getsingleCustomer(req, res, next) {
   // console.log(customer_hash)
 
   try {
-    const singleCustomer = await getSingleCustomerr(customer_hash);
+    const singleCustomer = await customerService.getSingleCustomer(customer_hash);
     // console.log(singleCustomer);
 
     if (!singleCustomer) {
@@ -133,7 +126,7 @@ async function getsingleCustomer(req, res, next) {
 async function findCustomer(req, res, next) {
   // console.log(req.query);
   try {
-    const customer = await findCustomerr(req.query);
+    const customer = await customerService.findCustomer(req.query);
     // console.log(customer)
 
     if (customer.length < 1) {

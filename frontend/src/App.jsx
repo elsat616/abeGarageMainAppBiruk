@@ -5,6 +5,9 @@ import { Routes, Route } from "react-router";
 
 // Import the page components
 import Home from "./markup/pages/Home";
+import About from "./markup/pages/About";
+import Service from "./markup/pages/Services";
+import Contact from "./markup/pages/Contact";
 import Login from "./markup/pages/Login";
 import Unauthorized from "./markup/pages/Unauthorized";
 import AddEmployee from "./markup/pages/admin/AddEmployee";
@@ -23,6 +26,7 @@ import EditOrder from "./markup/pages/admin/EditOrders";
 import OrderDetails from "./markup/pages/admin/OrderDetails";
 import AddNewOrders from "./markup/pages/admin/AddNewOrders";
 import CreateNewOrders from "./markup/pages/admin/CreateNewOrders";
+import AdminDashboard from "./markup/pages/admin/AdminDashBoard";
 
 // Import the header and footer components
 import Header from "./markup/components/Header/Header";
@@ -39,7 +43,6 @@ import "./assets/styles/custom.css";
 
 // import the PrivateAuthToute component
 import PrivateAuthRoute from "./markup/components/Auth/PrivateAuthRoute";
-import AddNewOrder from "./markup/components/Admin/AddNewOrder/AddNewOrder";
 
 function App() {
   return (
@@ -48,11 +51,26 @@ function App() {
       <Routes>
         {/* home page route */}
         <Route path="/" element={<Home />} />
+
+        <Route path="/about" element={<About />} />
+        <Route path="/service" element={<Service />} />
+        <Route path="/contact" element={<Contact />} />
+
         {/* login page route */}
         <Route path="/login" element={<Login />} />
+
         {/* unauthorized page route */}
         <Route path="/unauthorized" element={<Unauthorized />} />
-        {/* Orders page route */}
+
+        {/* Dashboard page route */}
+        <Route
+          path="/admin"
+          element={
+            <PrivateAuthRoute roles={[1, 2, 3]}>
+              <AdminDashboard />{" "}
+            </PrivateAuthRoute>
+          }
+        />
 
         {/* Customers page route */}
         <Route

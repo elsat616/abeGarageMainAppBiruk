@@ -1,6 +1,6 @@
 import React from "react";
-import vban1 from "../../../assets/images/custom/vban1.jpg";
-import vban2 from "../../../assets/images/custom/vban2.jpg";
+import vban1 from "../../../assets/images/custom/image0.jpg";
+import vban2 from "../../../assets/images/custom/image1.jpg";
 
 function AboutUs() {
   return (
@@ -12,7 +12,7 @@ function AboutUs() {
               <img src={vban1} alt="" />
               <img src={vban2} alt="" />
               <div className="year-experience" data-parallax='{"y": 30}'>
-                <strong>17</strong> years <br />
+                <strong>10</strong> years <br />
                 Experience{" "}
               </div>
             </div>
@@ -20,7 +20,7 @@ function AboutUs() {
           <div className="col-lg-7 pl-lg-5">
             <div className="sec-title">
               <h5>Welcome to Our workshop</h5>
-              <h2>We have 24 years experience</h2>
+              <h2>We have 10 years experience</h2>
               <div className="text">
                 <p>
                   Bring to the table win-win survival strategies to ensure

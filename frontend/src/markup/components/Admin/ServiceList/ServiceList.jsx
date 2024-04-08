@@ -124,7 +124,8 @@ function ServiceList() {
                   </div>
                   <div class="d-flex align-items-center px-4">
                     <Link
-                      to={`/admin/services/service-update/${service.service_hash}`}>
+                      to={`/admin/services/service-update/${service.service_id}`}
+                    >
                       <FaEdit color="#081336" />
                     </Link>
                   </div>
@@ -159,7 +160,8 @@ function ServiceList() {
                     ref={serviceDescriptionDom}
                     onChange={serviceDescriptionTracker}
                     value={service_description}
-                    required=""></textarea>
+                    required=""
+                  ></textarea>
                 </div>
 
                 <div className="form-group col-md-12">

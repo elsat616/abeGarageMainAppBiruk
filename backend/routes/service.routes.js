@@ -38,7 +38,7 @@ router.put(
 
 // create a route to handle the get single service request in get
 router.get(
-  "/api/service/single/:hash",
+  "/api/service/single/:service_id",
   //   [verifyToken, isAdmin_Manager],
   serviceController.getsingleService
 );

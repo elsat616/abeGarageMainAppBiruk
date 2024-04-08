@@ -21,7 +21,7 @@ function EditEmployee() {
 
   // console.log(active_employee);
 
-  const { employee_hash } = useParams();
+  const { employee_id } = useParams();
 
   // console.log(employee_first_name);
   // console.log(employee_last_name);
@@ -76,7 +76,7 @@ function EditEmployee() {
       // console.log(formData);
       try {
         const data = await employeeService?.singleEmployee(
-          employee_hash,
+          employee_id,
           loggedInEmployeeToken
         );
         // console.log(data.data.singleEmployee[0]);
@@ -125,8 +125,8 @@ function EditEmployee() {
       employee_last_name,
       employee_phone,
       company_role_id,
-      employee_hash,
       active_employee,
+      employee_id,
     };
 
     try {
@@ -135,7 +135,6 @@ function EditEmployee() {
         loggedInEmployeeToken
       );
 
-      // alert("grooddddddddddddddddddddddd");
       navigate("/admin/employees");
     } catch (error) {
       console.log(error);
@@ -147,7 +146,7 @@ function EditEmployee() {
       <section className="contact-section">
         <div className="auto-container">
           <div className="contact-title">
-            <h2>Edit: {employee1.employee_email} </h2>
+            <h2>Update: {employee1.employee_email} </h2>
           </div>
           <div className="row clearfix">
             <div className="form-column col-lg-7">
@@ -157,7 +156,6 @@ function EditEmployee() {
 
                   <form onSubmit={handleSubmit}>
                     <div className="row clearfix">
-                      
                       {/* First Name */}
                       <div className="form-group col-md-12">
                         <input

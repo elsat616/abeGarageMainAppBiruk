@@ -1,5 +1,5 @@
 import React from "react";
-import feature from "../../../assets/images/custom/features.png";
+import feature from "../../../assets/images/custom/image4.jpg";
 function Features() {
   return (
     <section className="features-section">

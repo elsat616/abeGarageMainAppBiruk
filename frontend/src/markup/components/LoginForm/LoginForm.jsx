@@ -95,7 +95,7 @@ function LoginForm(props) {
             setServerMsg("");
             setSpinner(!spin);
             if (location.pathname === "/login") {
-              window.location.replace("/");
+              window.location.replace("/admin");
             } else {
               window.location.reload();
             }
@@ -190,7 +190,7 @@ function LoginForm(props) {
                             padding: "25px",
                           }}
                           role="alert">
-                          {serverMsg}
+                          {/* {serverMsg} */}
                         </div>
                       )}
                     </div>

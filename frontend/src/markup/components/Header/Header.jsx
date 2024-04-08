@@ -97,14 +97,12 @@ function Header() {
                         </li>
                         <li>
                           <Link to="/contact">Contact Us</Link>
-                        </li>
-                        {isAdmin_Manager ||
-                        isAdmin ||
-                        isAdmin_manager_employee ? (
+                        </li>                        
+                        {isLogged && (
                           <li>
-                            <Link to="/admin">Dashboard</Link>
+                            <Link to="/admin">Admin</Link>
                           </li>
-                        ) : null}
+                        )}
                       </ul>
                     </div>
                   </nav>

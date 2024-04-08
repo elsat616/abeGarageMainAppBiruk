@@ -67,7 +67,7 @@ function NewOrder1() {
       <section className="contact-section">
         <div className="auto-container">
           <div className="contact-title">
-            <h2>Create a New Order 1</h2>
+            <h2>Create a New Order</h2>
           </div>
 
           <div className="contact-form">

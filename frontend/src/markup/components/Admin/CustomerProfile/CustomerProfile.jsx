@@ -328,9 +328,11 @@ function CustomerProfile() {
                     style={{ height: "25px", width: "25px" }}>
                     <span>
                       {showHide ? (
-                        <GiCrossedBones size={40} color="#C91236" />
+                        <button className="theme-btn btn-style-one mt-4">Hide</button>
+                        // <GiCrossedBones size={40} color="#C91236" />
                       ) : (
-                        <FaCirclePlus size={40} color="#222B48" />
+                        // <FaCirclePlus size={40} color="#222B48" />
+                        <button className="theme-btn btn-style-one mt-5 ml-4" >Add Vehicle</button>
                       )}
                     </span>
                   </div>
@@ -524,10 +526,11 @@ function CustomerProfile() {
                 </div>
 
                 <span onClick={()=>handleAdd(customer1.customer_hash)}>
-                  <FaCirclePlus
+                  {/* <FaCirclePlus
                     size={40}
                     className="scale-on-hover cursor-pointer text-dark"
-                  />
+                  /> */}
+                   <button className="theme-btn btn-style-one mt-4" >Add Order</button>
                 </span>
               </div>
             </div>

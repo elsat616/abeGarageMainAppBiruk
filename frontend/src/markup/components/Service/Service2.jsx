@@ -1,5 +1,5 @@
 import React from "react";
-import Service from "../../../assets/images/custom/aditionalService.png";
+import Service from "../../../assets/images/custom/image2.jpg";
 function Service2() {
   return (
     <section className="why-choose-us">

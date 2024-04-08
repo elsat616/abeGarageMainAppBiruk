@@ -1,5 +1,5 @@
 import React from "react";
-import banner from "../../../assets/images/banner/oilchange.jpg";
+import banner from "../../../assets/images/custom/image5.jpg";
 
 function BottomBanner() {
   return (
@@ -13,7 +13,7 @@ function BottomBanner() {
       ></div>
 
       <div className="auto-container">
-        <h5>Working since 1999</h5>
+        <h5>Working since 2014</h5>
         <h2>
           Tuneup Your Car <br /> to Next Level
         </h2>

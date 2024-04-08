@@ -33,24 +33,23 @@ async function updateService(formData, loggedInEmployeeToken) {
   return data;
 }
 
-
 async function singleService(formData, loggedInEmployeeToken) {
-    const headers = {
-      "x-access-token": loggedInEmployeeToken,
-    };
-    // console.log(formData);
-    const data = await axios.get(`/api/service/single/${formData}`, { headers });
-  
-    // console.log(data);
-  
-    return data;
-  }
+  const headers = {
+    "x-access-token": loggedInEmployeeToken,
+  };
+  // console.log(formData);
+  const data = await axios.get(`/api/service/single/${formData}`, { headers });
+
+  // console.log(data);
+
+  return data;
+}
 
 const SERVICE = {
   addService,
   getAllServices,
   updateService,
-  singleService
+  singleService,
 };
 
 export default SERVICE;

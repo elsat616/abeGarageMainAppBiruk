@@ -21,11 +21,6 @@ function EditCustomer() {
   const { customer_hash } = useParams();
   // console.log(customer_hash);
 
-  // console.log(employee_first_name);
-  // console.log(employee_last_name);
-  // console.log(employee_phone);
-  // console.log(company_role_id);
-
   // traget
   const firstNameDom = useRef();
   const lastNameDom = useRef();

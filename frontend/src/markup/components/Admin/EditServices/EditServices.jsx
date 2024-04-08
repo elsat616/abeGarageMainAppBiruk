@@ -2,33 +2,19 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-// import recat components
-import { Table, Button } from "react-bootstrap";
-
-// import react icons
-import { FaEdit } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-
 // import the auth hook
 import { useAuth } from "../../../../Context/AuthContext";
 
 // import the employee service to use the get employees function
 import SERVICE from "../../../../services/service.services";
 
-// import the date-fns library
-import { format } from "date-fns";
-
 ////////////////////////////////////////
-function ServiceList() {
+function EditServices() {
   const navigate = useNavigate();
 
   const [service_name, setServiceName] = useState("");
   const [service_description, setServiceDescription] = useState("");
   const [services, setServices] = useState([]);
-
-  // target
-  const serviceNameDom = useRef();
-  const serviceDescriptionDom = useRef();
 
   // to serve as aflag to show the error message
   const [apiError, setApiError] = useState(false);
@@ -36,7 +22,11 @@ function ServiceList() {
   // store the error message
   const [apiErrorMessage, setApiErrorMessage] = useState(null);
 
-  const { service_hash } = useParams();
+  const { service_id } = useParams();
+
+  // traget
+  const serviceNameDom = useRef();
+  const serviceDescriptionDom = useRef();
 
   // create a variable to hold the users token
   let loggedInEmployeeToken = "";
@@ -57,26 +47,37 @@ function ServiceList() {
   }
 
   // fetch data
-  async function fetchData() {
-    try {
-      const data = await SERVICE.singleService(
-        service_hash,
-        loggedInEmployeeToken
-      );
-
-      console.log(data.data.singleService);
-      setServices(data.data.services);
-
-      setServiceName(data.data.singleService[0].service_name);
-      setServiceDescription(data.data.singleService[0].service_description);
-
-      // setVehicleError("");
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await SERVICE?.singleService(
+          service_id,
+          loggedInEmployeeToken
+        );
+        if (data?.statusText !== "OK") {
+          // set apiError to true
+          setApiError(true);
+
+          if (data?.status === 403) {
+            setApiErrorMessage("Please login again");
+          } else if (data?.status === 401) {
+            setApiErrorMessage("You are not Authorized to view this page");
+          } else {
+            setApiErrorMessage("Please try again laterrrr");
+          }
+        }
+
+        console.log(data.data.singleService);
+        // setServices(data.data.services);
+
+        setServiceName(data.data.singleService[0].service_name);
+        setServiceDescription(data.data.singleService[0].service_description);
+
+        // setVehicleError("");
+      } catch (error) {
+        console.log(error);
+      }
+    }
     fetchData();
   }, []);
 
@@ -89,7 +90,7 @@ function ServiceList() {
     const formData = {
       service_name,
       service_description,
-      service_hash,
+      service_id,
     };
 
     try {
@@ -107,7 +108,7 @@ function ServiceList() {
     <>
       <section className="contact-section pb-5">
         <div className=" bg-white px-5 pt-5 mt-4 contact-title mb-1">
-          <h2>Update " {service_name} " Service </h2>
+          <h2>Update:Service </h2>
           <div className="contact-form">
             <form onSubmit={handleSubmit}>
               <div className="row clearfix">
@@ -131,12 +132,13 @@ function ServiceList() {
                     ref={serviceDescriptionDom}
                     onChange={serviceDescriptionTracker}
                     value={service_description}
-                    required=""></textarea>
+                    required=""
+                  ></textarea>
                 </div>
 
                 <div className="form-group col-md-12">
                   <button class="theme-btn btn-style-one" type="submit">
-                    <span>ADD SERVICE</span>
+                    <span>UPDATE SERVICE</span>
                   </button>
                 </div>
               </div>
@@ -148,4 +150,4 @@ function ServiceList() {
   );
 }
 
-export default ServiceList;
+export default EditServices;

@@ -7,15 +7,13 @@ const crypto = require("crypto");
 async function createService(service) {
   // console.log(servicee)
 
-  const hash_id = crypto.randomUUID();
 
   const query =
-    "INSERT INTO common_services (service_name,service_description,service_hash) VALUES(?,?,?)";
+    "INSERT INTO common_services (service_name,service_description VALUES(?,?)";
 
   const rows = await connection.query(query, [
     service.service_name,
-    service.service_description,
-    hash_id,
+    service.service_description
   ]);
 
   //   console.log(rows);
@@ -41,12 +39,12 @@ async function updateService(service) {
   // console.log(service)
 
   const query =
-    "UPDATE common_services SET  service_name = ?, service_description = ? WHERE service_hash = ?";
+    "UPDATE common_services SET  service_name = ?, service_description = ? WHERE service_id = ?";
 
   const rows = await connection.query(query, [
     service.service_name,
     service.service_description,
-    service.service_hash,
+    service.service_id,
   ]);
 
   return rows;
@@ -55,7 +53,7 @@ async function updateService(service) {
 async function getsingleService(service) {
   // console.log(service)
 
-  const query = "SELECT * FROM common_services WHERE service_hash = ?";
+  const query = "SELECT * FROM common_services WHERE service_id = ?";
 
   const rows = await connection.query(query, [service]);
 

@@ -73,6 +73,7 @@ async function updateCustomer(req, res, next) {
 
     const rows1 = updateCustomer.rows1.affectedRows;
     const rows2 = updateCustomer.rows2.affectedRows;
+    
 
     // console.log(rows1, rows2);
 

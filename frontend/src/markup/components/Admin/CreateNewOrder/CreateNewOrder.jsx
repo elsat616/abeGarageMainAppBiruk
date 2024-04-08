@@ -359,14 +359,14 @@ function CreateNewOrder() {
               </div>
 
               <div>
-                <span className="font-weight-bold mr-2">
+                {/* <span className="font-weight-bold mr-2">
                   Edit vehicle info{" "}
-                </span>
-                <span>
+                </span> */}
+                {/* <span>
                   <Link to={`/admin/vehicle-update/${vehicle1.vehicle_id}`}>
                     <FaEdit color="#081336" />
                   </Link>
-                </span>
+                </span> */}
               </div>
             </div>
           </div>{" "}
@@ -462,7 +462,7 @@ function CreateNewOrder() {
                         required
                       ></textarea>
                     </div>
-
+{/* 
                     <h3 className="ml-3">Notes For Internal Use</h3>
                     <div className="form-group col-md-12">
                       <input
@@ -503,9 +503,9 @@ function CreateNewOrder() {
                         value={order_description}
                         required
                       />
-                    </div>
+                    </div> */}
 
-                    <h3 className="ml-3">Estimated Completion Date</h3>
+                    {/* <h3 className="ml-3">Estimated Completion Date</h3>
                     <div className="form-group col-md-12">
                       <input
                         type="date"
@@ -517,7 +517,7 @@ function CreateNewOrder() {
                         value={estimated_completion_date}
                         required
                       />
-                    </div>
+                    </div> */}
 
                     <h3 className="ml-3">Total Service Price</h3>
                     <div className="form-group col-md-12">

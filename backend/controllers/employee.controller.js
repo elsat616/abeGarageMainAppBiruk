@@ -7,7 +7,9 @@ async function createEmployee(req, res, next) {
 
   // console.log(req.headers);
 
-  const employeeExists = await employeeService.checkIfEmployeeExists(employee_email);
+  const employeeExists = await employeeService.checkIfEmployeeExists(
+    employee_email
+  );
 
   // if employee exists, send a response to a client
   if (employeeExists) {
@@ -67,10 +69,10 @@ async function getAllEmployeees(req, res, next) {
 
 // get single employee data controller
 async function getSingleEmployee(req, res, next) {
-  const employee_hash = req.params.hash;
-  console.log(employee_hash)
+  const employee_id = req.params.employee_id;
+  console.log(employee_id);
   try {
-    const singleEmployee = await employeeService.getSingleEmploye(employee_hash);
+    const singleEmployee = await employeeService.getSingleEmploye(employee_id);
     // console.log(singleEmployee);
 
     if (!singleEmployee) {
@@ -94,7 +96,7 @@ async function getSingleEmployee(req, res, next) {
 // update Employee controller
 async function updateEmployee(req, res, next) {
   try {
-    const updateEmployee = await employeeService.updateEmploye(req.body);
+    const updateEmployee = await employeeService.updateEmployee(req.body);
 
     // console.log(updateEmployee);
 
@@ -132,9 +134,9 @@ async function updateEmployee(req, res, next) {
 async function deleteEmployee(req, res, next) {
   const { employee_id } = req.body;
   try {
-    const deleteEmployee = await employeeService.deleteEmploye(employee_id);
+    const deleteEmployee = await employeeService.deleteEmployee(employee_id);
 
-    if (!deleteEmploye) {
+    if (!deleteEmployee) {
       res.status(200).json({
         error: "Delete Incomplete!",
       });

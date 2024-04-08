@@ -75,12 +75,12 @@ async function updateService(req, res, next) {
 }
 
 async function getsingleService(req, res, next) {
-  const service_hash = req.params.hash;
+  const service_id = req.params.service_id;
 
-  // console.log(service_hash)
+  // console.log(service_id)
 
   try {
-    const singleService = await serviceService.getsingleService(service_hash);
+    const singleService = await serviceService.getsingleService(service_id);
 
     // console.log(singleService[0].service_id);
 

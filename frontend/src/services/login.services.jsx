@@ -8,7 +8,7 @@ async function loginEmployee(formData) {
 
 export function logOut() {
   localStorage.removeItem("employee");
-  window.location.reload();
+  // window.location.reload();
 }
 
 export default loginEmployee;

@@ -88,8 +88,8 @@ function EmployeesList() {
     }, 2000);
   }
 
-  function handleEdit(id) {
-    navigate(`/admin/employee-update/${id}`);
+  function handleEdit(employee_id) {
+    navigate(`/admin/employee-update/${employee_id}`);
   }
 
   return (
@@ -131,7 +131,7 @@ function EmployeesList() {
                       !employe.active_employee ? `${"inactive"}` : `${"active"}`
                     }
                     key={employe.employee_id}
-                    onClick={() => handleEdit(employe.employee_hash)}
+                    onClick={() => handleEdit(employe.employee_id)}
                   >
                     <td>{employe.active_employee ? "Yes" : "No"}</td>
                     <td>{employe.employee_first_name}</td>
@@ -146,7 +146,10 @@ function EmployeesList() {
                     </td>
                     <td>{employe.company_role_name}</td>
                     <td className="edit">
-                      <span  className="hover1">
+                      <span
+                        className="hover1"
+                        onClick={() => handleEdit(employe.employee_id)}
+                      >
                         <FaEdit color="#081336" />
                       </span>
 

@@ -1,5 +1,5 @@
 import React from "react";
-import about from "../../../assets/images/custom/servicep.png";
+import about from "../../../assets/images/custom/image3.jpg";
 function AboutUs1() {
   return (
     <section className="about-section">

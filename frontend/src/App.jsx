@@ -102,7 +102,7 @@ function App() {
 
         {/* Customer Profile Page Route */}
         <Route
-          path="/admin/services/service-update/:service_hash"
+          path="/admin/services/service-update/:service_id"
           element={<EditService />}
         />
 
@@ -156,7 +156,7 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         {/* Edit Employees page route */}
         <Route
-          path="/admin/employee-update/:employee_hash"
+          path="/admin/employee-update/:employee_id"
           element={<EditEmployee />}
         />
         {/* add employee page route */}

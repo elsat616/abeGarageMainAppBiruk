@@ -5,10 +5,7 @@ const express = require("express");
 const router = express.Router();
 
 // import the authMiddleware
-const {
-  verifyToken,
-  isAdmin
-} = require("../middlewares/auth.middleware");
+const { verifyToken, isAdmin } = require("../middlewares/auth.middleware");
 
 // import the customer controller
 const vehicleController = require("../controllers/vehicle.controller");
@@ -33,6 +30,7 @@ router.get(
   // [verifyToken, isAdmin],
   vehicleController.getSingleVehicle
 );
+router.patch("/api/vehicle/:vehicle_id", vehicleController.editVehicle);
 
 // export the router
 module.exports = router;

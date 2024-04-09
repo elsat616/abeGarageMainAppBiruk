@@ -7,13 +7,12 @@ const crypto = require("crypto");
 async function createService(service) {
   // console.log(servicee)
 
-
   const query =
-    "INSERT INTO common_services (service_name,service_description VALUES(?,?)";
+    "INSERT INTO common_services (service_name,service_description) VALUES(?,?)";
 
   const rows = await connection.query(query, [
     service.service_name,
-    service.service_description
+    service.service_description,
   ]);
 
   //   console.log(rows);

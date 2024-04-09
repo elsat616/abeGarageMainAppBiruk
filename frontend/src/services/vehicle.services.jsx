@@ -46,11 +46,22 @@ async function getSingleVehicle(
 
   return data;
 }
+const updateVehicleById = async (vehicle_id, formData) => {
+  try {
+    const response = await axios.patch(`/api/vehicle/${vehicle_id}`, formData);
+    console.log("Vehicle updated", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating vehicle:", error.message);
+    throw error;
+  }
+};
 
 const vehicleService = {
   addVehicle,
   getCustomerVehicle,
   getSingleVehicle,
+  updateVehicleById,
 };
 
 export default vehicleService;

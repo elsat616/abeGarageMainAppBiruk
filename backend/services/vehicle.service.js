@@ -92,5 +92,31 @@ async function getSingleVehicle(single) {
   // console.log(rows1);
   return rows1;
 }
+async function editVehicle(vehicle_id, vehicle) {
+  try {
+    const query =
+      "UPDATE customer_vehicle_info SET vehicle_year = ?, vehicle_make = ?, vehicle_model = ?, vehicle_type = ?, vehicle_mileage = ?, vehicle_tag = ?, vehicle_serial = ?, vehicle_color = ? WHERE vehicle_id = ?";
+    const result = await conn.query(query, [
+      vehicle.vehicle_year,
+      vehicle.vehicle_make,
+      vehicle.vehicle_model,
+      vehicle.vehicle_type,
+      vehicle.vehicle_mileage,
+      vehicle.vehicle_tag,
+      vehicle.vehicle_serial,
+      vehicle.vehicle_color,
+      vehicle_id,
+    ]);
+    return result.affectedRows > 0;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
 
-module.exports = { createVehicle, getVehicleeById, getSingleVehicle };
+module.exports = {
+  createVehicle,
+  getVehicleeById,
+  getSingleVehicle,
+  editVehicle,
+};

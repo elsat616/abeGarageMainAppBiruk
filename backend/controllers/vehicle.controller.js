@@ -77,5 +77,19 @@ async function getSingleVehicle(req, res, next) {
     });
   }
 }
+async function editVehicle(req, res, next) {
+  try {
+    const { id } = req.params;
+    const vehicleData = req.body;
+    const updated = await vehicleService.editVehicle(id, vehicleData);
+    if (updated) {
+      res.status(200).json({ message: "Vehicle updated successfully" });
+    } else {
+      res.status(404).json({ error: "Vehicle not found" });
+    }
+  } catch (error) {
+    res.status(400).json({ error: "Failed to update vehicle" });
+  }
+}
 
-module.exports = { createVehicle, getVehicleById, getSingleVehicle };
+module.exports = { createVehicle, getVehicleById, getSingleVehicle,editVehicle };
